@@ -10,7 +10,7 @@ func _ready():
     tween = Tween.new()
     add_child(tween)
 
-    rotate_board(-5)
+    # rotate_board(-5)
 
 
 func rotate_board(turns: int):
