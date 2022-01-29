@@ -12,7 +12,7 @@ _data = {
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
-turn_actions = [ "draw", "discard", "rotate" ]
+turn_actions = [ "draw", "place", "discard", "rotate" ]
 
 [node name="Control" type="Control" parent="."]
 anchor_left = 0.5
@@ -33,7 +33,7 @@ script = ExtResource( 1 )
 [node name="Wheel" type="Polygon2D" parent="Control/Board"]
 polygon = PoolVector2Array( 2, 286, 125, 253, 229, 196, 300, 64, 328, 3, 311, -94, 227, -211, 11, -254, -135, -245, -228, -170, -311, 12, -291, 179, -168, 247 )
 
-[node name="Hand" type="Control" parent="."]
+[node name="PlayerHand" type="Control" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -44,7 +44,7 @@ __meta__ = {
 }
 discard_pile = NodePath("../DiscardPile")
 
-[node name="Cards" type="Path2D" parent="Hand"]
+[node name="Cards" type="Path2D" parent="PlayerHand"]
 position = Vector2( 3, -114 )
 curve = SubResource( 1 )
 
@@ -61,11 +61,11 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-cards_path = NodePath("../Hand/Cards")
+cards_path = NodePath("../PlayerHand/Cards")
 
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
-[connection signal="next_action" from="." to="Hand" method="_on_Root_next_action"]
+[connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
-[connection signal="action_ended" from="Hand" to="." method="_on_action_ended"]
+[connection signal="action_ended" from="PlayerHand" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="DiscardPile" to="." method="_on_action_ended"]

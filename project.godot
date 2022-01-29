@@ -14,6 +14,10 @@ config/name="Ggj- 2022"
 run/main_scene="res://Board.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Clicker="*res://clicker/clicker.gd"
+
 [editor_plugins]
 
 enabled=PoolStringArray(  )
