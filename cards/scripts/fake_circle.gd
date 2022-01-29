@@ -7,7 +7,7 @@ var card = preload("res://cards/scenes/card.tscn")
 var db = preload("res://data/cards.tres")
 
 
-const ammount_of_cards = 8
+const AMMOUNT_OF_CARDS = 8
 var card_list = []
 var card_data
 var is_day = [true, true, true, true, false, false, false, false]
@@ -33,7 +33,7 @@ func _ready():
 
 func attack(attacking_card):
     var attacker_index = card_list.find(attacking_card)
-    var opponent_index = ( attacker_index + ammount_of_cards / 2 ) % ammount_of_cards
+    var opponent_index = ( attacker_index + AMMOUNT_OF_CARDS / 2 ) % AMMOUNT_OF_CARDS
 
     var opponent_card = card_list[opponent_index]
     # Handel hier de abillities af
