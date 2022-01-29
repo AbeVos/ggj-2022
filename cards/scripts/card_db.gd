@@ -15,7 +15,7 @@ func load_data():
     var file = File.new()
 
     if not file.file_exists(DATA_FILE_PATH):
-        print("Card data not found")
+        push_error("Card data not found")
 
     file.open(DATA_FILE_PATH, file.READ)
     var contents = file.get_as_text()
