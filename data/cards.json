@@ -1,0 +1,90 @@
+{
+  "9a416930": {
+    "name": "Argia",
+    "attack_day_value": 3,
+    "defence_day_value": 2,
+    "attack_night_value": 0,
+    "defence_night_value": 2,
+    "image_path": "res://cards/assets/argia.png"
+  },
+  "75a6d665": {
+    "name": "Illuna",
+    "attack_day_value": 0,
+    "defence_day_value": 2,
+    "attack_night_value": 3,
+    "defence_night_value": 2,
+    "image_path": "res://cards/assets/illuna.png"
+  },
+  "691749b2": {
+    "name": "Lily",
+    "attack_day_value": 0,
+    "defence_day_value": 1,
+    "attack_night_value": 2,
+    "defence_night_value": 1,
+    "image_path": "res://cards/assets/lily.png"
+  },
+  "be6acc3e": {
+    "name": "Elie",
+    "attack_day_value": 2,
+    "defence_day_value": 1,
+    "attack_night_value": 1,
+    "defence_night_value": 2,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "3e5b1fd9": {
+    "name": "Ullr",
+    "attack_day_value": 2,
+    "defence_day_value": 1,
+    "attack_night_value": 2,
+    "defence_night_value": 2,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "5d836407": {
+    "name": "Skadi",
+    "attack_day_value": 2,
+    "defence_day_value": 2,
+    "attack_night_value": 2,
+    "defence_night_value": 1,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "a20e12dc": {
+    "name": "Arya",
+    "attack_day_value": 3,
+    "defence_day_value": 2,
+    "attack_night_value": 2,
+    "defence_night_value": 3,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "7c9f2e13": {
+    "name": "Muis",
+    "attack_day_value": 1,
+    "defence_day_value": 1,
+    "attack_night_value": 3,
+    "defence_night_value": 0,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "0f5c1cdb": {
+    "name": "Koek",
+    "attack_day_value": 1,
+    "defence_day_value": 5,
+    "attack_night_value": 3,
+    "defence_night_value": 2,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "73bad354": {
+    "name": "Battlemage",
+    "attack_day_value": 0,
+    "defence_day_value": 0,
+    "attack_night_value": 3,
+    "defence_night_value": 2,
+    "image_path": "res://cards/assets/default.png"
+  },
+  "1d2dffea": {
+    "name": "Meike",
+    "attack_day_value": 1,
+    "defence_day_value": 1,
+    "attack_night_value": -1,
+    "defence_night_value": 0,
+    "image_path": "res://cards/assets/default.png"
+  }
+}
