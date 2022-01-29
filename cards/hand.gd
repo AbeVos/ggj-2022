@@ -1,4 +1,6 @@
-extends Node2D
+extends Control
+signal action_ended(turn, result)
+signal cards_drawn
 
 var card_scene = preload("res://cards/HandCard.tscn")
 
@@ -10,8 +12,6 @@ var card_tween
 func _ready():
 	card_tween = Tween.new()
 	add_child(card_tween)
-
-	draw_hand()
 
 
 func draw_hand():
@@ -36,7 +36,8 @@ func draw_hand():
 	card_tween.start()
 
 	yield(card_tween, "tween_all_completed")
-	print("Done")
+
+	emit_signal("cards_drawn")
 
 
 func draw_card():
@@ -45,3 +46,23 @@ func draw_card():
 	# TODO: Assign a random resource.
 
 	return card
+
+
+func _on_Root_next_action(turn, player):
+	if player != 0:
+		emit_signal("action_ended", turn, {"skipped": true})
+		return
+
+	match turn:
+		"draw":
+			draw_hand()
+
+			yield(self, "cards_drawn")
+
+			emit_signal("action_ended", turn, {})
+		"place":
+			for follower in $Cards.get_children():
+				var card = follower.get_node("HandCard")
+				card.activate()
+		"discard":
+			pass

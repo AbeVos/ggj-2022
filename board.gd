@@ -1,29 +1,38 @@
 extends Node2D
 
-export(int) var radiants = 6
+signal action_ended(turn, result)
+signal new_angle(angle)
+signal rotation_complete
+
+export(int) var sectors = 6  # Number of card slots on each side.
 export(float, 0, 5) var rotation_duration = 1.0
 
 var tween
+var angle = 0
 
 
 func _ready():
     tween = Tween.new()
     add_child(tween)
 
-    # rotate_board(-5)
-
 
 func rotate_board(turns: int):
-    var forward = turns > 0
+    var clockwise = turns > 0
     for _idx in range(abs(turns)):
-        single_rotation(forward)
+        single_rotation(clockwise)
         yield(tween, "tween_all_completed")
 
+        angle = angle % (2 * sectors)
+        print(angle)
+        emit_signal("new_angle", angle)
 
-func single_rotation(forward: bool):
-    var angle = 360 / (2.0 * radiants)
+    emit_signal("rotation_complete")
 
-    if not forward:
+
+func single_rotation(clockwise: bool):
+    var angle = 360 / (2.0 * sectors)
+
+    if not clockwise:
         angle = -angle
 
     tween.interpolate_property(
@@ -31,3 +40,11 @@ func single_rotation(forward: bool):
         rotation_degrees, rotation_degrees + angle, rotation_duration,
         Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
     tween.start()
+
+
+func _on_Root_next_action(turn, player):
+    if turn == "rotate":
+        rotate_board(1)
+        yield(self, "rotation_complete")
+
+        emit_signal("action_ended", turn, {})
