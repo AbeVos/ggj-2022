@@ -12,7 +12,7 @@ _data = {
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
-turn_actions = [ "draw", "discard", "rotate" ]
+turn_actions = [ "draw", "place", "discard", "rotate" ]
 
 [node name="Control" type="Control" parent="."]
 anchor_left = 0.5
