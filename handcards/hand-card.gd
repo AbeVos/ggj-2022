@@ -1,8 +1,5 @@
 extends Node2D
 class_name HandCard
-signal card_grabbed(this)
-signal card_released
-signal card_placed
 
 export(Resource) var card_resource setget set_resource
 
@@ -32,15 +29,32 @@ func _input(event):
         clicked = false
         dragging = false
 
-        var offset = hand.get_node("Cards").curve.get_closest_offset(
-            self.global_position)
-        self.get_parent().remove_child(self)
-        hand.add_card(self, offset)
-
         # TODO: If card is over an empty slot, move it to the slot.
-        # TODO: Otherwise, return it to the hand.
+        var target_slot = find_closest_slot()
+
+        if target_slot != null:
+            print(target_slot.name)
+            target_slot.occupy_slot($Sprite)
+
+            get_parent().remove_child(self)
+            queue_free()
+        else:
+            # Otherwise, return it to the hand.
+            var offset = hand.get_node("Cards").curve.get_closest_offset(
+                self.global_position)
+            self.get_parent().remove_child(self)
+            hand.add_card(self, offset)
     elif event is InputEventMouseMotion and dragging:
         target = event.position
+
+
+func _on_Area_area_entered(area: Area2D):
+    if area.get_parent() is CardSlot:
+        pass
+
+func _on_Area_area_exited(area: Area2D):
+    if area.get_parent() is CardSlot:
+        pass
 
 
 func _on_Area_input_event(_viewport, _event, _shape_idx):
@@ -54,14 +68,6 @@ func _on_Area_input_event(_viewport, _event, _shape_idx):
         hand.release_card(self)
         # TODO: Release card from hand.
 
-    # TODO: Check if mouse is pressed and start dragging the card.
-
-    # TODO: While dragging, move the card to the cursor.
-
-    # TODO: If, while dragging, the mouse is released, check if the area
-    # collides with an area of the playing board. If not, return the card to
-    # the hand.
-
 
 func set_resource(value):
     card_resource = value
@@ -71,6 +77,38 @@ func set_resource(value):
 
 func activate():
     $Area.visible = true
+
+
+func deactivate():
+    $Area.visible = false
+
+
+func find_closest_slot():
+    var areas = $Area.get_overlapping_areas()
+
+    if len(areas) == 0:
+        return
+
+    var smallest_dist = INF
+    var target_slot = null
+
+    for area in areas:
+        if not area.get_parent() is CardSlot:
+            continue
+
+        var slot = area.get_parent()
+
+        if slot.is_occupied:
+            continue
+
+        var distance = global_position.distance_squared_to(
+            slot.global_position)
+
+        if distance < smallest_dist:
+            smallest_dist = distance
+            target_slot = slot
+
+    return target_slot
 
 
 func on_click():

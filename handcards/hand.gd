@@ -2,7 +2,6 @@ extends Control
 signal action_ended(turn, result)
 signal cards_drawn
 signal card_added
-signal card_released
 
 var card_scene = preload("res://handcards/HandCard.tscn")
 
@@ -32,7 +31,7 @@ func draw_hand():
     emit_signal("cards_drawn")
 
 
-func add_card(card: HandCard, start_offset: float):
+func add_card(card, start_offset: float):
     # Add the new card.
     var follower = PathFollow2D.new()
     follower.add_child(card)
@@ -43,26 +42,29 @@ func add_card(card: HandCard, start_offset: float):
 
     # TODO: Reorder cards.
 
+    for follow in $Cards.get_children():
+        card = follow.get_node("HandCard")
+        card.activate()
+
     move_cards()
     yield(card_tween, "tween_all_completed")
 
     emit_signal("card_added")
 
 
-func release_card(card: HandCard):
+func release_card(card):
     for follower in $Cards.get_children():
         var hand_card = follower.get_node("HandCard")
 
-        if hand_card != card:
-            continue
+        if hand_card == card:
+            follower.remove_child(hand_card)
+            $Cards.remove_child(follower)
+            follower.queue_free()
 
-        follower.remove_child(hand_card)
-        $Cards.remove_child(follower)
-        follower.queue_free()
+            add_child(hand_card)
 
-        add_child(hand_card)
-
-        break
+        else:
+            hand_card.deactivate()
 
     move_cards()
 
@@ -89,12 +91,12 @@ func move_cards():
             Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 
     card_tween.start()
+    yield(card_tween, "tween_all_completed")
 
 
 func draw_card():
     var card = card_scene.instance()
     card.hand = self
-    card.connect("card_grabbed", self, "release_card")
 
     # TODO: Assign a random resource.
 
@@ -118,4 +120,6 @@ func _on_Root_next_action(turn, player):
                 var card = follower.get_node("HandCard")
                 card.activate()
         _:
-            pass
+            for follower in $Cards.get_children():
+                var card = follower.get_node("HandCard")
+                card.deactivate()

@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "CardSlot",
+"language": "GDScript",
+"path": "res://card-slots/card-slot.gd"
+}, {
+"base": "Node2D",
 "class": "HandCard",
 "language": "GDScript",
 "path": "res://handcards/hand-card.gd"
 } ]
 _global_script_class_icons={
+"CardSlot": "",
 "HandCard": ""
 }
 
@@ -23,6 +29,10 @@ _global_script_class_icons={
 config/name="Ggj- 2022"
 run/main_scene="res://Board.tscn"
 config/icon="res://icon.png"
+
+[audio]
+
+default_bus_layout=""
 
 [autoload]
 
