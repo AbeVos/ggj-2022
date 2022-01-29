@@ -16,7 +16,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/google_sheet/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [physics]
 

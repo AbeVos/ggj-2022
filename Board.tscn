@@ -5,7 +5,7 @@
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array( -46.6171, 68.0357, 46.6171, -68.0357, -106, 41, -25.1984, -62.9961, 25.1984, 62.9961, 110, 50 )
+"points": PoolVector2Array( -36.5377, 25.1984, 36.5377, -25.1984, -62, 13, -46.6171, -32.758, 46.6171, 32.758, 62, 16 )
 }
 
 [node name="Board" type="Node2D"]
@@ -16,10 +16,8 @@ position = Vector2( 490, 266 )
 polygon = PoolVector2Array( 2, 286, 125, 253, 229, 196, 300, 64, 328, 3, 311, -94, 227, -211, 11, -254, -135, -245, -228, -170, -311, 12, -291, 179, -168, 247 )
 
 [node name="Hand" type="Node2D" parent="."]
-position = Vector2( 495, 504 )
+position = Vector2( 505, 256 )
 script = ExtResource( 3 )
 
-[node name="Cards" type="Node2D" parent="Hand"]
-
-[node name="Path" type="Path2D" parent="Hand"]
+[node name="Cards" type="Path2D" parent="Hand"]
 curve = SubResource( 1 )

@@ -5,11 +5,16 @@ signal card_placed
 
 export(Resource) var card_resource setget set_resource
 
+var active = false
 var dragging = false
 
 
+func _ready():
+    $Area.visible = false
+
+
 func _on_Area_input_event(viewport, event, shape_idx):
-    print(name)
+    print(self)
 
     # TODO: Check if mouse is pressed and start dragging the card.
 
@@ -24,3 +29,7 @@ func set_resource(value):
     card_resource = value
 
     # TODO: Update sprite etc.
+
+
+func activate():
+    $Area.visible = true
