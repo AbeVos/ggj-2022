@@ -1,3 +1,8 @@
+extends Control
+
+#Debug
+var r = 350
+
 var card = preload("res://cards/scenes/card.tscn")
 var db = preload("res://data/cards.tres")
 
@@ -9,6 +14,23 @@ var is_day = [true, true, true, true, false, false, false, false]
 
 func _ready():
     card_data = db.card_data
+
+    #DEBUG zet kaartje in een circel
+    for n in range(0,8):
+        var card_inst = card.instance()
+        var t = ((2 * PI) / 8) * n
+        card_inst.position = Vector2(  r * cos(t) , r * sin(t) )
+        card_inst.rotation = t + (PI / 2)
+        card_inst.scale = Vector2.ONE * 0.7
+        card_list.append(card_inst)
+        add_child(card_inst)
+        print("yee")
+
+
+    print("YEEEHAWW")
+    attack(card_list[2])
+
+
 func attack(attacking_card):
     var attacker_index = card_list.find(attacking_card)
     var opponent_index = ( attacker_index + ammount_of_cards / 2 ) % ammount_of_cards
