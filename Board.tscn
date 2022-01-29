@@ -52,14 +52,10 @@ position = Vector2( -153, -90 )
 curve = SubResource( 1 )
 
 [node name="DiscardPile" type="Control" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -143.0
-margin_top = -154.0
-margin_right = -103.0
-margin_bottom = -114.0
+margin_left = 144.0
+margin_top = 136.0
+margin_right = 184.0
+margin_bottom = 176.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -33,11 +33,10 @@ func _input(event):
         var target_slot = find_closest_slot()
 
         if target_slot != null:
-            print(target_slot.name)
             target_slot.occupy_slot($Sprite)
 
-            get_parent().remove_child(self)
-            queue_free()
+            # call_deferred("queue_free")
+            call_deferred("free")
         else:
             # Otherwise, return it to the hand.
             var offset = hand.get_node("Cards").curve.get_closest_offset(
@@ -51,6 +50,7 @@ func _input(event):
 func _on_Area_area_entered(area: Area2D):
     if area.get_parent() is CardSlot:
         pass
+
 
 func _on_Area_area_exited(area: Area2D):
     if area.get_parent() is CardSlot:

@@ -24,7 +24,7 @@ func _ready():
         $Slots.add_child(slot)
         slot.connect("slot_occupied", self, "_on_CardSlot_slot_occupied")
 
-        var angle_offset = 360.0 / (2 * sectors) * sector
+        var angle_offset = 360.0 / (2 * sectors) * (sector + 0.5)
         slot.position = radius * Vector2(
             cos(deg2rad(angle_offset)),
             sin(deg2rad(angle_offset)))
