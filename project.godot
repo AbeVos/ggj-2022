@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "HandCard",
+"language": "GDScript",
+"path": "res://handcards/hand-card.gd"
+} ]
+_global_script_class_icons={
+"HandCard": ""
+}
+
 [application]
 
 config/name="Ggj- 2022"

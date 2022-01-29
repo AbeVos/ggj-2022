@@ -2,8 +2,8 @@
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://turn-manager/turn-manager.gd" type="Script" id=2]
-[ext_resource path="res://cards/hand.gd" type="Script" id=3]
-[ext_resource path="res://cards/discard-pile.gd" type="Script" id=4]
+[ext_resource path="res://handcards/hand.gd" type="Script" id=3]
+[ext_resource path="res://handcards/discard-pile.gd" type="Script" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -12,7 +12,7 @@ _data = {
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
-turn_actions = [ "draw", "place", "discard", "rotate" ]
+turn_actions = [ "draw", "discard", "rotate" ]
 
 [node name="Control" type="Control" parent="."]
 anchor_left = 0.5
