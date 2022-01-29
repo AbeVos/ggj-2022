@@ -28,6 +28,11 @@ config/icon="res://icon.png"
 
 Clicker="*res://clicker/clicker.gd"
 
+[display]
+
+window/size/width=1200
+window/size/height=1200
+
 [editor_plugins]
 
 enabled=PoolStringArray(  )

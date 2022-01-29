@@ -2,7 +2,7 @@
   "9a416930": {
     "name": "Argia",
     "attack_day_value": 3,
-    "defence_day_value": 2,
+    "defence_day_value": 8,
     "attack_night_value": 0,
     "defence_night_value": 2,
     "image_path": "res://cards/assets/argia.png"
@@ -11,7 +11,7 @@
     "name": "Illuna",
     "attack_day_value": 0,
     "defence_day_value": 2,
-    "attack_night_value": 3,
+    "attack_night_value": 6,
     "defence_night_value": 2,
     "image_path": "res://cards/assets/illuna.png"
   },
