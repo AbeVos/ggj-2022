@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Alarm01.wav-aac24cb910641098a413a59f072aa915.sample"
+path="res://.import/Alarm01.wav-fcd0534f4714f2987a061b1e0b15d06a.sample"
 
 [deps]
 
-source_file="res://Audio/Alarm01.wav"
-dest_files=[ "res://.import/Alarm01.wav-aac24cb910641098a413a59f072aa915.sample" ]
+source_file="res://audio/Alarm01.wav"
+dest_files=[ "res://.import/Alarm01.wav-fcd0534f4714f2987a061b1e0b15d06a.sample" ]
 
 [params]
 
