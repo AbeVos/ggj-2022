@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://turn-manager/turn-manager.gd" type="Script" id=2]
 [ext_resource path="res://cards/hand.gd" type="Script" id=3]
+[ext_resource path="res://cards/discard-pile.gd" type="Script" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -11,7 +12,7 @@ _data = {
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
-turn_actions = [ "draw", "rotate" ]
+turn_actions = [ "draw", "discard", "rotate" ]
 
 [node name="Control" type="Control" parent="."]
 anchor_left = 0.5
@@ -41,12 +42,30 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+discard_pile = NodePath("../DiscardPile")
 
 [node name="Cards" type="Path2D" parent="Hand"]
 position = Vector2( 3, -114 )
 curve = SubResource( 1 )
 
+[node name="DiscardPile" type="Control" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -143.0
+margin_top = -154.0
+margin_right = -103.0
+margin_bottom = -114.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+cards_path = NodePath("../Hand/Cards")
+
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="Hand" method="_on_Root_next_action"]
+[connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="Hand" to="." method="_on_action_ended"]
+[connection signal="action_ended" from="DiscardPile" to="." method="_on_action_ended"]

@@ -5,6 +5,7 @@ signal cards_drawn
 var card_scene = preload("res://cards/HandCard.tscn")
 
 export(int) var cards_in_hand = 3
+export(NodePath) var discard_pile
 
 var card_tween
 
@@ -64,5 +65,5 @@ func _on_Root_next_action(turn, player):
 			for follower in $Cards.get_children():
 				var card = follower.get_node("HandCard")
 				card.activate()
-		"discard":
+		_:
 			pass
