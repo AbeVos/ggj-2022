@@ -52,17 +52,21 @@ func single_rotation(clockwise: bool):
     tween.interpolate_property(
         self, "rotation_degrees",
         rotation_degrees, rotation_degrees + angle_degrees, rotation_duration,
-        Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+        Tween.TRANS_QUINT, Tween.EASE_IN_OUT)
     tween.start()
 
 
-func _on_Root_next_action(turn, _player):
-    if turn == "rotate":
-        rotate_board(1)
+func _on_Root_next_action(turn, player):
+    match turn:
+        "rotate":
+            rotate_board(1)
 
-        yield(self, "rotation_complete")
+            yield(self, "rotation_complete")
 
-        emit_signal("action_ended", turn, {})
+            emit_signal("action_ended", turn, {})
+        "place":
+            if player == 1:
+                emit_signal("action_ended", turn, {"skipped": true})
 
 
 func _on_CardSlot_slot_occupied(slot, card):
