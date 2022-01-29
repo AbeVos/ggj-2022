@@ -1,18 +1,13 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://cards/scenes/card.tscn" type="PackedScene" id=1]
+[ext_resource path="res://cards/scripts/fake_circle.gd" type="Script" id=1]
 
-[node name="Node2D" type="Node2D"]
-
-[node name="Card" parent="." instance=ExtResource( 1 )]
-position = Vector2( 218, 272 )
-rotation = -0.949459
-
-[node name="Card2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 549, 214 )
-id = "3e5b1fd9"
-
-[node name="Card3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 860, 270 )
-rotation = 3.2149
-id = "75a6d665"
+[node name="fake_circle" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
