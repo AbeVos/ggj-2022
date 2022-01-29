@@ -28,6 +28,9 @@ config/icon="res://icon.png"
 
 Clicker="*res://clicker/clicker.gd"
 
+[editor_plugins]
+
+enabled=PoolStringArray(  )
 
 [physics]
 
