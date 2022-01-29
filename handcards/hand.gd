@@ -18,7 +18,7 @@ func _ready():
 
 func draw_hand():
     # Draw random cards.
-    for _idx in range(cards_in_hand):
+    for idx in range(cards_in_hand):
         var card = draw_card()
 
         var follower = PathFollow2D.new()
@@ -44,6 +44,9 @@ func add_card(card, start_offset: float):
 
     for follow in $Cards.get_children():
         card = follow.get_node("HandCard")
+        if card == null:
+            push_error("Follower " + follow.name + " has no child!")
+
         card.activate()
 
     move_cards()
@@ -70,6 +73,8 @@ func release_card(card):
 
 
 func move_cards():
+    card_tween.remove_all()
+
     # Move the cards to the correct position.
     var followers = $Cards.get_children()
     for idx in range(len(followers)):
@@ -91,7 +96,7 @@ func move_cards():
             Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 
     card_tween.start()
-    yield(card_tween, "tween_all_completed")
+    # yield(card_tween, "tween_all_completed")
 
 
 func draw_card():

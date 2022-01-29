@@ -25,11 +25,12 @@ func _input(event):
         and not event.pressed
         and event.button_index == 1
         and dragging
+        and clicked
     ): # Left mouse released.
         clicked = false
         dragging = false
 
-        # TODO: If card is over an empty slot, move it to the slot.
+        # If card is over an empty slot, move it to the slot.
         var target_slot = find_closest_slot()
 
         if target_slot != null:
@@ -81,6 +82,8 @@ func activate():
 
 func deactivate():
     $Area.visible = false
+    clicked = false
+    dragging = false
 
 
 func find_closest_slot():
@@ -112,5 +115,6 @@ func find_closest_slot():
 
 
 func on_click():
-    clicked = true
-    print("Clicked ", name)
+    if $Area.visible:
+        clicked = true
+        print("Clicked ", name)
