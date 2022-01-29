@@ -23,28 +23,28 @@ func rotate_board(turns: int):
         yield(tween, "tween_all_completed")
 
         angle = angle % (2 * sectors)
-        print(angle)
         emit_signal("new_angle", angle)
 
     emit_signal("rotation_complete")
 
 
 func single_rotation(clockwise: bool):
-    var angle = 360 / (2.0 * sectors)
+    var angle_degrees = 360 / (2.0 * sectors)
 
     if not clockwise:
-        angle = -angle
+        angle_degrees = -angle_degrees
 
     tween.interpolate_property(
         self, "rotation_degrees",
-        rotation_degrees, rotation_degrees + angle, rotation_duration,
+        rotation_degrees, rotation_degrees + angle_degrees, rotation_duration,
         Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
     tween.start()
 
 
-func _on_Root_next_action(turn, player):
+func _on_Root_next_action(turn, _player):
     if turn == "rotate":
         rotate_board(1)
+
         yield(self, "rotation_complete")
 
         emit_signal("action_ended", turn, {})

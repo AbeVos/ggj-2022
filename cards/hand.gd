@@ -16,7 +16,7 @@ func _ready():
 
 func draw_hand():
 	# Draw random cards.
-	for idx in range(cards_in_hand):
+	for _idx in range(cards_in_hand):
 		var card = draw_card()
 
 		var follower = PathFollow2D.new()
@@ -49,12 +49,12 @@ func draw_card():
 
 
 func _on_Root_next_action(turn, player):
-	if player != 0:
-		emit_signal("action_ended", turn, {"skipped": true})
-		return
-
 	match turn:
 		"draw":
+			if player != 0:
+				emit_signal("action_ended", turn, {"skipped": true})
+				return
+
 			draw_hand()
 
 			yield(self, "cards_drawn")

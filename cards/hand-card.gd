@@ -13,7 +13,7 @@ func _ready():
     $Area.visible = false
 
 
-func _on_Area_input_event(viewport, event, shape_idx):
+func _on_Area_input_event(_viewport, _event, _shape_idx):
     print(self)
 
     # TODO: Check if mouse is pressed and start dragging the card.
