@@ -4,7 +4,7 @@ export var turnsToSleep = 4
 var isSleeping = true
 
 func handleTurnsToSleep():
-    if(isSleeping):
+    if isSleeping:
         turnsToSleep -= 1
         print(turnsToSleep)
         if (turnsToSleep <= 0):
