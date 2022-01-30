@@ -58,7 +58,7 @@ __meta__ = {
 discard_pile = NodePath("../DiscardPile")
 
 [node name="Cards" type="Path2D" parent="PlayerHand"]
-position = Vector2( -153, -90 )
+position = Vector2( 300, -90 )
 curve = SubResource( 1 )
 
 [node name="DiscardPile" type="Control" parent="."]
