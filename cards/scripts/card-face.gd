@@ -13,10 +13,10 @@ var defence_night = 0 setget set_defence_night
 func _ready():
 	var data = db.card_data[id]
 
-	attack_day = data.attack_day_value
-	attack_night = data.attack_night_value
-	defence_day = data.defence_day_value
-	defence_night = data.defence_night_value
+	set_attack_day(data.attack_day_value)
+	set_attack_night(data.attack_night_value)
+	set_defence_day(data.defence_day_value)
+	set_defence_night(data.defence_night_value)
 
 	$Image.texture = load(data.image_path)
 
