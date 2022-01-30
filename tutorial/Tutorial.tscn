@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://tutorial/tutorial.gd" type="Script" id=1]
+[ext_resource path="res://tutorial/tutorial-dialog.gd" type="Script" id=2]
+[ext_resource path="res://font/card_font_theme.tres" type="Theme" id=3]
+
+[node name="Tutorial" type="CenterContainer"]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -600.0
+margin_top = -600.0
+margin_right = 600.0
+margin_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DrawDialog" type="AcceptDialog" parent="."]
+margin_left = 159.0
+margin_top = 540.0
+margin_right = 1040.0
+margin_bottom = 659.0
+theme = ExtResource( 3 )
+popup_exclusive = true
+window_title = "Tip!"
+dialog_text = "Each turn you may draw a card and place it on the lower half of the wheel.
+If there are no slots left, this step is skipped."
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+action = "draw"
+
+[node name="DiscardDialog" type="AcceptDialog" parent="."]
+margin_left = 317.0
+margin_top = 560.0
+margin_right = 883.0
+margin_bottom = 640.0
+theme = ExtResource( 3 )
+popup_exclusive = true
+window_title = "Tip!"
+dialog_text = "The cards that you didn't choose are discarded."
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+action = "discard"
+
+[node name="AttackDialog" type="AcceptDialog" parent="."]
+margin_left = 105.0
+margin_top = 404.0
+margin_right = 1094.0
+margin_bottom = 796.0
+theme = ExtResource( 3 )
+popup_exclusive = true
+window_title = "Tip!"
+dialog_text = "Select a card to attack. Cards attack the slot that is straight in front of them.
+The attack value on the day side of your card is compared to the defence value on
+the night side of your opponent's card. When your attack is equal to or greater than
+the opponent's defence, the opponent's card is destroyed.
+
+If the slot in front of an attacking card is empty, the card's damage is dealt directly
+to the opposing player. When a player has zero hitpoints, they lose.
+
+Sleeping cards cannot attack until they awake."
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+action = "attack"
