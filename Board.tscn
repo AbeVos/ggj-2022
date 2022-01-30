@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://turn-manager/turn-manager.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://handcards/discard-pile.gd" type="Script" id=4]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://audio/BackgroundMusic.tscn" type="PackedScene" id=6]
+[ext_resource path="res://audio/BoardAudio.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -68,6 +69,8 @@ mouse_filter = 2
 
 [node name="BackgroundMusic" parent="." instance=ExtResource( 6 )]
 
+[node name="BoardAudio" parent="." instance=ExtResource( 7 )]
+
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
@@ -75,6 +78,8 @@ mouse_filter = 2
 [connection signal="next_turn" from="." to="Control/Board" method="_on_Root_next_turn"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
 [connection signal="player_attacked" from="Control/Board" to="HUD" method="_on_Board_player_attacked"]
+[connection signal="rotation_complete" from="Control/Board" to="BoardAudio" method="_on_Board_rotation_complete"]
+[connection signal="rotation_started" from="Control/Board" to="BoardAudio" method="_on_Board_rotation_started"]
 [connection signal="action_ended" from="PlayerHand" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="DiscardPile" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="HUD" to="." method="_on_action_ended"]
