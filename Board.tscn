@@ -28,10 +28,13 @@ __meta__ = {
 }
 
 [node name="Board" type="Node2D" parent="Control"]
+position = Vector2( 208, -27 )
 script = ExtResource( 1 )
 
 [node name="Wheel" type="Polygon2D" parent="Control/Board"]
-polygon = PoolVector2Array( 2, 286, 125, 253, 229, 196, 300, 64, 328, 3, 311, -94, 227, -211, 11, -254, -135, -245, -228, -170, -311, 12, -291, 179, -168, 247 )
+polygon = PoolVector2Array( 9, 170, 88, 145, 151, 81, 168, 2, 151, -79, 94, -155, -4, -185, -82, -157, -140, -94, -163, -6, -144, 72, -84, 147 )
+
+[node name="Slots" type="Node2D" parent="Control/Board"]
 
 [node name="PlayerHand" type="Control" parent="."]
 anchor_left = 0.5
@@ -45,18 +48,14 @@ __meta__ = {
 discard_pile = NodePath("../DiscardPile")
 
 [node name="Cards" type="Path2D" parent="PlayerHand"]
-position = Vector2( 3, -114 )
+position = Vector2( -153, -90 )
 curve = SubResource( 1 )
 
 [node name="DiscardPile" type="Control" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -143.0
-margin_top = -154.0
-margin_right = -103.0
-margin_bottom = -114.0
+margin_left = 144.0
+margin_top = 136.0
+margin_right = 184.0
+margin_bottom = 176.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
