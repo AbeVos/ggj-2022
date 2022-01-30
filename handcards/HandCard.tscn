@@ -5,7 +5,7 @@
 [ext_resource path="res://handcards/card-collider.tres" type="Shape2D" id=3]
 
 [node name="HandCard" type="Node2D"]
-scale = Vector2( 0.7, 0.7 )
+scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 1 )
 
 [node name="Area" type="Area2D" parent="."]

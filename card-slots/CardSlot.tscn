@@ -2,10 +2,10 @@
 
 [ext_resource path="res://card-slots/card-slot.gd" type="Script" id=1]
 [ext_resource path="res://handcards/card-collider.tres" type="Shape2D" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://cards/assets/card_position.png" type="Texture" id=3]
 
 [node name="CardSlot" type="Node2D"]
-scale = Vector2( 0.7, 0.7 )
+scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 1 )
 
 [node name="Area" type="Area2D" parent="."]
@@ -15,12 +15,14 @@ monitoring = false
 shape = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 1.5, 2.1875 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
 [node name="Slot" type="Node2D" parent="."]
+rotation = 3.14159
 
 [node name="Label" type="Label" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 __meta__ = {

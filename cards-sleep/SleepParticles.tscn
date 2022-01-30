@@ -9,16 +9,19 @@ colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="SleepParticles" type="CPUParticles2D"]
 scale = Vector2( 0.2, 0.2 )
-amount = 3
+amount = 4
 lifetime = 2.0
 texture = ExtResource( 1 )
 direction = Vector2( 0, -1 )
-spread = 25.0
+spread = 133.71
 gravity = Vector2( 0, 0 )
-initial_velocity = 20.0
-angular_velocity = 2.0
+initial_velocity = 100.0
+initial_velocity_random = 0.23
 angular_velocity_random = 1.0
 linear_accel = 50.0
+scale_amount = 2.3
+scale_amount_random = 1.0
+color = Color( 1, 1, 1, 0.764706 )
 color_ramp = SubResource( 2 )
 script = ExtResource( 2 )
 turnsToSleep = 1
