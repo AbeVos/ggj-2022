@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Zzz.png-171601f0d1a86105b9a1da31f1ae658c.stex"
+path="res://.import/Zzz.png-6aed2ec46c7c21d7ae724e23929cfe33.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Zzz.png"
-dest_files=[ "res://.import/Zzz.png-171601f0d1a86105b9a1da31f1ae658c.stex" ]
+source_file="res://cards - sleep/Zzz.png"
+dest_files=[ "res://.import/Zzz.png-6aed2ec46c7c21d7ae724e23929cfe33.stex" ]
 
 [params]
 
