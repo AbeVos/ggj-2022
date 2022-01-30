@@ -8,7 +8,7 @@ offsets = PoolRealArray( 0, 0.117117, 0.747748, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="SleepParticles" type="CPUParticles2D"]
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.2, 0.2 )
 amount = 3
 lifetime = 2.0
 texture = ExtResource( 1 )
