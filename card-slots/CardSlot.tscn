@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://card-slots/card-slot.gd" type="Script" id=1]
 [ext_resource path="res://handcards/card-collider.tres" type="Shape2D" id=2]
 [ext_resource path="res://cards/assets/card_position.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
 
 [node name="CardSlot" type="Node2D"]
 scale = Vector2( 0.8, 0.8 )
@@ -28,5 +29,9 @@ margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="DayIndicator" type="Sprite" parent="."]
+position = Vector2( 0, -196.25 )
+texture = ExtResource( 4 )
 
 [connection signal="input_event" from="Area" to="." method="_on_Area_input_event"]
