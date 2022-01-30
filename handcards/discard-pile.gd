@@ -1,10 +1,10 @@
 extends Control
 signal action_ended(turn, result)
 signal hand_discarded
-	@@ -6,7 +7,6 @@ export(NodePath) var cards_path
+
+export(NodePath) var cards_path
 
 var tween
-
 
 func _ready():
 	tween = Tween.new()
