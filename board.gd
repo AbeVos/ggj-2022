@@ -123,6 +123,36 @@ func opponent_can_attack() -> bool:
     return false
 
 
+func perform_opponent_attack():
+    var from = (angle + sectors) % (2 * sectors)
+    var to = (angle + 2 * sectors) % (2 * sectors)
+
+    var indices = []
+
+    for idx in range(to, from):
+        # idx = from + idx
+        print(idx)
+
+        var card = get_card_in_slot(idx)
+
+        if card != null:
+            var is_sleeping = card.get_node("SleepParticles").isSleeping
+            if not is_sleeping:
+                indices.append(idx)
+
+    if len(indices) == 0:
+        emit_signal("action_ended", "attack", {"skipped": true})
+    else:
+        var select = indices[randi() % len(indices)]
+        var slot = $Slots.get_children()[select]
+
+        attack(select)
+        slot.attack()
+        yield(slot, "slot_attacked")
+
+        emit_signal("action_ended", "attack", {})
+
+
 func attack(attacker_index: int):
     # var attacker_index = card_list.find(attacking_card)
     var opponent_index = (
@@ -136,7 +166,7 @@ func attack(attacker_index: int):
         push_error("There is no attacking card")
 
     if opponent_card == null:
-        # TODO: Attack opponent.
+        # Attack opponent.
         emit_signal("player_attacked", 1, attacking_card.attack_day)
         return
 
@@ -147,17 +177,14 @@ func attack(attacker_index: int):
 
     if slot_is_bottom(attacker_index):
         attack_result = (
-            card_data[opponent_card.id].defence_night_value
-            - card_data[attacking_card.id].attack_day_value
-        )
+            opponent_card.defence_night - attacking_card.attack_day)
+
+        emit_signal("player_attacked", 1, attack_result)
 
     else:
         attack_result = (
-            card_data[opponent_card.id].defence_day_value
-            - card_data[attacking_card.id].attack_night_value
-        )
-
-    print("Attack result ", attack_result)
+            opponent_card.defence_day - attacking_card.attack_night)
+        emit_signal("player_attacked", 0, attack_result)
 
 
 func _on_Root_next_action(turn, player):
@@ -174,11 +201,12 @@ func _on_Root_next_action(turn, player):
             if player > 0:
                 emit_signal("action_ended", turn, {"skipped": true})
         "attack":
+            print("Can opponent attack? ", opponent_can_attack())
             if player == 0 and player_can_attack():
                 player_attacking = true
-            elif player > 1 and opponent_can_attack():
+            elif player > 0 and opponent_can_attack():
                 # TODO: Select random card and attack.
-                pass
+                perform_opponent_attack()
             else:
                 emit_signal("action_ended", turn, {"skipped": true})
 
