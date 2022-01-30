@@ -1,6 +1,4 @@
 extends Control
 
-signal start_game
-
 func _on_StartButton_button_down():
-    emit_signal("start_game")
+    get_tree().change_scene("res://board.tscn")
