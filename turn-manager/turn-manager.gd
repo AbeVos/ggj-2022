@@ -29,6 +29,14 @@ func _on_action_ended(action: String, result: Dictionary = {}):
         return
 
     # TODO: Handle result.
+    if action == "check":
+        var winner = result.get("winner")
+
+        if winner != null:
+            print("PLAYER ", winner, " HAS WON!")
+
+            return
+
     var skipped = result.get("skipped", false)
 
     if skipped:

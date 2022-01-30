@@ -3,9 +3,13 @@ class_name CardSlot
 
 signal slot_occupied(this, card)
 signal slot_freed(this, card)
+signal slot_clicked(this, card)
+
+var sleep_scene = preload("res://cards-sleep/SleepParticles.tscn")
 
 var tween
 var is_occupied := false
+var is_bottom := true
 
 
 func _ready():
@@ -23,6 +27,9 @@ func occupy_slot(card):
     is_occupied = true
     var card_parent = card.get_parent()
     card_parent.remove_child(card)
+
+    var sleep = sleep_scene.instance()
+    card.add_child(sleep)
     $Slot.add_child(card)
 
     card.global_position = position
@@ -55,3 +62,15 @@ func free_slot():
     emit_signal("slot_freed", self, card)
 
     return card
+
+
+func _on_Area_input_event(_viewport, event, _shape_idx):
+    if (
+        event is InputEventMouseButton
+        and event.pressed
+        and event.button_index == 1
+    ):
+        if len($Slot.get_children()) == 1:
+            emit_signal("slot_clicked", self, $Slot.get_children()[0])
+        elif len($Slot.get_children()) > 1:
+            push_error("Slot has more than one child.")
