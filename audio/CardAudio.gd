@@ -16,3 +16,6 @@ func random_sound():
     sounds.shuffle()
     stream = sounds.front()
     play()
+
+func _on_CardSlot_card_placed():
+	random_sound()
