@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://font/Vollkorn-VariableFont_wght.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://font/NotoSerif-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://start-menu/assets/nightsky3.png" type="Texture" id=3]
+[ext_resource path="res://end-screen/EndScreen.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 150
+outline_size = 2
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 46
+font_data = ExtResource( 2 )
+
+[node name="EndScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 600, 599.5 )
+scale = Vector2( 0.59668, 0.601074 )
+texture = ExtResource( 3 )
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -288.0
+margin_top = -115.8
+margin_right = 288.0
+margin_bottom = 115.8
+custom_colors/font_color = Color( 0.945098, 0.866667, 0.588235, 1 )
+custom_colors/font_outline_modulate = Color( 0.764706, 0.607843, 0.270588, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "You won"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.587
+anchor_right = 0.5
+anchor_bottom = 0.592
+margin_left = -58.5
+margin_top = -35.0
+margin_right = 58.5
+margin_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+custom_colors/font_color = Color( 0.945098, 0.866667, 0.588235, 1 )
+custom_colors/font_color_hover = Color( 0.972549, 0.952941, 0.886275, 1 )
+custom_fonts/font = SubResource( 2 )
+action_mode = 0
+enabled_focus_mode = 0
+text = "Restart"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_down" from="RestartButton" to="." method="_on_RestartButton_button_down"]
