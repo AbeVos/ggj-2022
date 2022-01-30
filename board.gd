@@ -7,6 +7,7 @@ signal rotation_complete
 signal player_attacked(player, damage)
 
 var slot_scene = preload("res://card-slots/CardSlot.tscn")
+var card_db = preload("res://data/cards.tres")
 
 export(int) var sectors = 4  # Number of card slots on each side.
 export(float) var radius = 150.0
@@ -40,6 +41,8 @@ func _ready():
             cos(deg2rad(angle_offset)),
             sin(deg2rad(angle_offset)))
         slot.rotation_degrees = angle_offset + 90
+
+    card_data = card_db.card_data
 
 
 func rotate_board(turns: int):
