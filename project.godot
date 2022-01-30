@@ -42,6 +42,7 @@ Clicker="*res://clicker/clicker.gd"
 
 window/size/width=1200
 window/size/height=1200
+window/dpi/allow_hidpi=true
 
 [editor_plugins]
 
