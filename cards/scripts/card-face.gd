@@ -1,6 +1,6 @@
 extends Node2D
 
-export(String) var id = "9a416930"
+export(String) var id = "5d836407"
 
 var db = preload("res://data/cards.tres")
 

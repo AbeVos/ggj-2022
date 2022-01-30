@@ -6,6 +6,8 @@ export(NodePath) var cards_path
 
 var tween
 
+var discarded_card_ids := []
+
 func _ready():
     tween = Tween.new()
     add_child(tween)
@@ -34,6 +36,8 @@ func discard_hand():
 
     for follower in cards.get_children():
         var card = follower.get_node("HandCard")
+        
+        discarded_card_ids.push_back(card.get_child(1).id)
 
         var position = card.global_position
         var rotation = card.global_rotation_degrees
