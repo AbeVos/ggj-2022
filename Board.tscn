@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://turn-manager/turn-manager.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://art/BG_Final.png" type="Texture" id=8]
 [ext_resource path="res://hud/HUD.gd" type="Script" id=9]
 [ext_resource path="res://art/BG_disk.png" type="Texture" id=10]
+[ext_resource path="res://tutorial/Tutorial.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -78,13 +79,18 @@ mouse_filter = 2
 script = ExtResource( 9 )
 
 [node name="BackgroundMusic" parent="." instance=ExtResource( 6 )]
+pause_mode = 2
 
 [node name="BoardAudio" parent="BackgroundMusic" instance=ExtResource( 7 )]
+pause_mode = 1
+
+[node name="Tutorial" parent="." instance=ExtResource( 11 )]
 
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="HUD" method="_on_Root_next_action"]
+[connection signal="next_action" from="." to="Tutorial" method="_on_Root_next_action"]
 [connection signal="next_turn" from="." to="Control/Board" method="_on_Root_next_turn"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
 [connection signal="player_attacked" from="Control/Board" to="HUD" method="_on_Board_player_attacked"]
