@@ -34,36 +34,36 @@ func _on_Root_next_action(turn: String, player: int):
 func discard_hand():
     var cards = get_node(cards_path)
 
-	for follower in cards.get_children():
-		var card = follower.get_node("HandCard")
-		
-		discarded_card_ids.push_back(card.get_child(1).id)
+    for follower in cards.get_children():
+        var card = follower.get_node("HandCard")
+        
+        discarded_card_ids.push_back(card.get_child(1).id)
 
-		var position = card.global_position
-		var rotation = card.global_rotation_degrees
+        var position = card.global_position
+        var rotation = card.global_rotation_degrees
 
-		follower.remove_child(card)
-		cards.remove_child(follower)
-		follower.queue_free()
+        follower.remove_child(card)
+        cards.remove_child(follower)
+        follower.queue_free()
 
-		add_child(card)
-		card.global_position = position
-		card.global_rotation_degrees = rotation
+        add_child(card)
+        card.global_position = position
+        card.global_rotation_degrees = rotation
 
-		tween.interpolate_property(
-			card, "global_position",
-			position, rect_position, 1.0,
-			Tween.TRANS_BACK, Tween.EASE_IN_OUT)
-		tween.interpolate_property(
-			card, "global_rotation_degrees",
-			rotation, 0, 1.0,
-			Tween.TRANS_BACK, Tween.EASE_IN_OUT)
-		tween.start()
+        tween.interpolate_property(
+            card, "global_position",
+            position, rect_position, 1.0,
+            Tween.TRANS_BACK, Tween.EASE_IN_OUT)
+        tween.interpolate_property(
+            card, "global_rotation_degrees",
+            rotation, 0, 1.0,
+            Tween.TRANS_BACK, Tween.EASE_IN_OUT)
+        tween.start()
 
-		yield(get_tree().create_timer(0.5), "timeout")
+        yield(get_tree().create_timer(0.5), "timeout")
 
-	yield(tween, "tween_all_completed")
-	emit_signal("hand_discarded")
+    yield(tween, "tween_all_completed")
+    emit_signal("hand_discarded")
 
         var position = card.global_position
         var rotation = card.global_rotation_degrees
