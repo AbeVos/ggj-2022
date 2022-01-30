@@ -55,6 +55,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+board = NodePath("../Control/Board")
 discard_pile = NodePath("../DiscardPile")
 
 [node name="Cards" type="Path2D" parent="PlayerHand"]

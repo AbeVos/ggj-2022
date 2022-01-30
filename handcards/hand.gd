@@ -13,6 +13,7 @@ var deck_db = preload("res://data/deck.tres")
 var deck := []
 
 export(int) var cards_in_hand = 3
+export(NodePath) var board
 export(NodePath) var discard_pile
 
 var card_tween
@@ -115,7 +116,7 @@ func draw_card():
     var card = card_scene.instance()
     card.hand = self
 
-    #Assign a random resource.  
+    #Assign a random resource.
     if len(deck) < 3:
         reshuffle_deck()
 
@@ -124,6 +125,7 @@ func draw_card():
 
     return card
 
+
 func reshuffle_deck():
     var pile = get_parent().get_child(2)
     print(pile)
@@ -131,26 +133,34 @@ func reshuffle_deck():
     if len(pile.discarded_card_ids) > 1:
         for id in pile.discarded_card_ids:
             deck.push_back(id)
-    
+
         deck.shuffle()
         emit_signal("cards_reshuffled")
 
+
 func _on_Root_next_action(turn, player):
+    var can_place = get_node(board).player_can_place()
+
     match turn:
         "draw":
-            if player != 0:
-                emit_signal("action_ended", turn, {"skipped": true})
-                return
-
-            draw_hand()
-
-            yield(self, "cards_drawn")
-
-            emit_signal("action_ended", turn, {})
+            # If it isn't the player's turn or if the player cannot
+            # place a card (there is no space), this step is skipped.
+            if player != 0 or not can_place:
+                emit_signal("action_ended", "draw", {"skipped": true})
+            else:
+                draw_hand()
+                yield(self, "cards_drawn")
+                emit_signal("action_ended", "draw", {})
         "place":
-            for follower in $Cards.get_children():
-                var card = follower.get_node("HandCard")
-                card.activate()
+            if can_place:
+                for follower in $Cards.get_children():
+                    var card = follower.get_node("HandCard")
+                    card.activate()
+            else:
+                emit_signal("action_ended", "place", {"skipped": true})
+        "discard":
+            if player == 0 and not can_place:
+                emit_signal("action_ended", "discard", {"skipped": true})
         _:
             for follower in $Cards.get_children():
                 var card = follower.get_node("HandCard")

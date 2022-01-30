@@ -15,6 +15,7 @@ func _ready():
 
 func _on_Root_next_action(turn: String, player: int):
     if turn != "discard":
+        visible = false
         return
 
     if player != 0:
@@ -36,7 +37,7 @@ func discard_hand():
 
     for follower in cards.get_children():
         var card = follower.get_node("HandCard")
-        
+
         discarded_card_ids.push_back(card.get_child(1).id)
 
         var position = card.global_position
