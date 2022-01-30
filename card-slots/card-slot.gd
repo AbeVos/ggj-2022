@@ -4,17 +4,24 @@ class_name CardSlot
 signal slot_occupied(this, card)
 signal slot_freed(this, card)
 signal slot_clicked(this, card)
+signal slot_attacked
+
+export var attack_distance = 200
 
 var sleep_scene = preload("res://cards-sleep/SleepParticles.tscn")
 
-var tween
+var card_tween
+var attack_tween
 var is_occupied := false
 var is_bottom := true
 
 
 func _ready():
-    tween = Tween.new()
-    add_child(tween)
+    card_tween = Tween.new()
+    add_child(card_tween)
+
+    attack_tween = Tween.new()
+    add_child(attack_tween)
 
 
 func occupy_slot(card):
@@ -35,18 +42,18 @@ func occupy_slot(card):
     card.global_position = position
     card.global_rotation_degrees = rotation
 
-    tween.interpolate_property(
+    card_tween.interpolate_property(
         card, "position",
         card.position, Vector2.ZERO, 1.0,
         Tween.TRANS_ELASTIC, Tween.EASE_OUT)
-    tween.interpolate_property(
+    card_tween.interpolate_property(
         card, "rotation_degrees",
         card.rotation_degrees, 0.0, 1.0,
         Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 
-    tween.start()
+    card_tween.start()
 
-    yield(tween, "tween_all_completed")
+    yield(card_tween, "tween_all_completed")
 
     emit_signal("slot_occupied", self, card)
 
@@ -62,6 +69,29 @@ func free_slot():
     emit_signal("slot_freed", self, card)
 
     return card
+
+
+func attack():
+    var target = -attack_distance * Vector2.UP
+    attack_tween.interpolate_property(
+        $Slot, "position",
+        Vector2.ZERO, target, 0.3,
+        Tween.TRANS_BACK, Tween.EASE_IN)
+    attack_tween.start()
+
+    yield(attack_tween, "tween_all_completed")
+
+    attack_tween.interpolate_property(
+        $Slot, "position",
+        target, Vector2.ZERO, 0.7,
+        Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+    attack_tween.start()
+
+    yield(attack_tween, "tween_all_completed")
+    attack_tween.remove_all()
+
+    emit_signal("slot_attacked")
+
 
 
 func _on_Area_input_event(_viewport, event, _shape_idx):

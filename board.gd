@@ -82,7 +82,6 @@ func slot_is_bottom(slot: int) -> bool:
 func get_card_in_slot(idx: int):
     var slot = $Slots.get_children()[idx].get_node("Slot")
 
-    print(slot.get_children())
     if len(slot.get_children()) == 1:
         return slot.get_children()[0]
 
@@ -92,6 +91,22 @@ func get_card_in_slot(idx: int):
 func player_can_attack() -> bool:
     for idx in range(2 * sectors):
         if not slot_is_bottom(idx):
+            continue
+
+        var card = get_card_in_slot(idx)
+
+        if card == null:
+            continue
+
+        if not card.get_node("SleepParticles").isSleeping:
+            return true
+
+    return false
+
+
+func opponent_can_attack() -> bool:
+    for idx in range(2 * sectors):
+        if slot_is_bottom(idx):
             continue
 
         var card = get_card_in_slot(idx)
@@ -158,6 +173,9 @@ func _on_Root_next_action(turn, player):
         "attack":
             if player == 0 and player_can_attack():
                 player_attacking = true
+            elif player > 1 and opponent_can_attack():
+                # TODO: Select random card and attack.
+                pass
             else:
                 emit_signal("action_ended", turn, {"skipped": true})
 
@@ -181,10 +199,15 @@ func _on_CardSlot_slot_clicked(slot, _card):
     if not player_attacking:
         return
 
-    print("Attack!")
-
     var idx = $Slots.get_children().find(slot)
 
-    attack(idx)
+    print(slot_is_bottom(idx))
 
-    emit_signal("action_ended", "attack", {})
+    if slot_is_bottom(idx):
+        print("Attack!")
+        attack(idx)
+        slot.attack()
+
+        yield(slot, "slot_attacked")
+
+        emit_signal("action_ended", "attack", {})
