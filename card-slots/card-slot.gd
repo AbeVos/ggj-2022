@@ -93,7 +93,6 @@ func attack():
     emit_signal("slot_attacked")
 
 
-
 func _on_Area_input_event(_viewport, event, _shape_idx):
     if (
         event is InputEventMouseButton

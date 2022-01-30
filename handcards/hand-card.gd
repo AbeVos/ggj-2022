@@ -33,7 +33,7 @@ func _input(event):
         # If card is over an empty slot, move it to the slot.
         var target_slot = find_closest_slot()
 
-        if target_slot != null:
+        if target_slot != null and target_slot.is_bottom:
             target_slot.occupy_slot($CardFace)
 
             # call_deferred("queue_free")
