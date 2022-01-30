@@ -101,7 +101,7 @@ func find_closest_slot():
 
         var slot = area.get_parent()
 
-        if slot.is_occupied:
+        if slot.is_occupied or not slot.is_bottom:
             continue
 
         var distance = global_position.distance_squared_to(

@@ -10,5 +10,7 @@ export_presets.cfg
 .mono/
 data_*/
 
+builds/
+
 *.swp
 .vscode/
