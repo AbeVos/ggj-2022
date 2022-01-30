@@ -69,6 +69,7 @@ mouse_filter = 2
 [connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="HUD" method="_on_Root_next_action"]
+[connection signal="next_turn" from="." to="Control/Board" method="_on_Root_next_turn"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
 [connection signal="player_attacked" from="Control/Board" to="HUD" method="_on_Board_player_attacked"]
 [connection signal="action_ended" from="PlayerHand" to="." method="_on_action_ended"]

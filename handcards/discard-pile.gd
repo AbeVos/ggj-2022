@@ -6,7 +6,6 @@ export(NodePath) var cards_path
 
 var tween
 
-
 func _ready():
 	tween = Tween.new()
 	add_child(tween)

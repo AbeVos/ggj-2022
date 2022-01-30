@@ -156,6 +156,17 @@ func _on_Root_next_action(turn, player):
 				emit_signal("action_ended", turn, {"skipped": true})
 
 
+func _on_Root_next_turn(player):
+    for idx in range(2 * sectors):
+        var card = get_card_in_slot(idx)
+
+        if card == null:
+            continue
+
+        print("Update sleep")
+        card.get_node("SleepParticles").handleTurnsToSleep()
+
+
 func _on_CardSlot_slot_occupied(slot, card):
 	emit_signal("action_ended", "place", {"slot": slot, "card": card})
 
