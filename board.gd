@@ -21,139 +21,143 @@ var is_day = [true, true, true, true, false, false, false, false]
 
 
 func _ready():
-	tween = Tween.new()
-	add_child(tween)
+    tween = Tween.new()
+    add_child(tween)
 
-	for sector in range(2 * sectors):
-		var slot = slot_scene.instance()
-		slot.get_node("Label").text = str(sector)
+    for sector in range(2 * sectors):
+        var slot = slot_scene.instance()
+        slot.get_node("Label").text = str(sector)
 
-		$Slots.add_child(slot)
-		slot.connect("slot_occupied", self, "_on_CardSlot_slot_occupied")
-		slot.connect("slot_clicked", self, "_on_CardSlot_slot_clicked")
+        $Slots.add_child(slot)
+        slot.connect("slot_occupied", self, "_on_CardSlot_slot_occupied")
+        slot.connect("slot_clicked", self, "_on_CardSlot_slot_clicked")
 
-		var angle_offset = (
-			360.0 / (2 * sectors)  # Angle of a sector.
-			* (sector + 0.5)  # Sector index offset + halfsector offset.
-		)
-		slot.position = radius * Vector2(
-			cos(deg2rad(angle_offset)),
-			sin(deg2rad(angle_offset)))
-		slot.rotation_degrees = angle_offset + 90
+        var angle_offset = (
+            360.0 / (2 * sectors)  # Angle of a sector.
+            * (sector + 0.5)  # Sector index offset + halfsector offset.
+        )
+        slot.position = radius * Vector2(
+            cos(deg2rad(angle_offset)),
+            sin(deg2rad(angle_offset)))
+        slot.rotation_degrees = angle_offset + 90
 
 
 func rotate_board(turns: int):
-	var clockwise = turns > 0
-	for _idx in range(abs(turns)):
-		single_rotation(clockwise)
-		yield(tween, "tween_all_completed")
+    var clockwise = turns > 0
+    for _idx in range(abs(turns)):
+        single_rotation(clockwise)
+        yield(tween, "tween_all_completed")
 
-		angle = (angle + sign(turns)) % (2 * sectors)
-		emit_signal("new_angle", angle)
-		print("New angle ", angle)
+        angle = (angle + sign(turns)) % (2 * sectors)
+        emit_signal("new_angle", angle)
+        print("New angle ", angle)
 
-	for idx in range(2 * sectors):
-		var is_bottom = slot_is_bottom(idx)
-		var slot = $Slots.get_children()[idx]
+    for idx in range(2 * sectors):
+        var is_bottom = slot_is_bottom(idx)
+        var slot = $Slots.get_children()[idx]
 
 
-	emit_signal("rotation_complete")
+    emit_signal("rotation_complete")
 
 
 func single_rotation(clockwise: bool):
-	var angle_degrees = 360.0 / (2 * sectors)
+    var angle_degrees = 360.0 / (2 * sectors)
 
-	if not clockwise:
-		angle_degrees = -angle_degrees
+    if not clockwise:
+        angle_degrees = -angle_degrees
 
-	tween.interpolate_property(
-		self, "rotation_degrees",
-		rotation_degrees, rotation_degrees + angle_degrees, rotation_duration,
-		Tween.TRANS_QUINT, Tween.EASE_IN_OUT)
-	tween.start()
+    tween.interpolate_property(
+        self, "rotation_degrees",
+        rotation_degrees, rotation_degrees + angle_degrees, rotation_duration,
+        Tween.TRANS_QUINT, Tween.EASE_IN_OUT)
+    tween.start()
 
 
 func slot_is_bottom(slot: int) -> bool:
-	return (slot + angle) % (2 * sectors) < sectors
+    return (slot + angle) % (2 * sectors) < sectors
 
 
 func get_card_in_slot(idx: int):
-	var slot = $Slots.get_children()[idx].get_node("Slot")
+    var slot = $Slots.get_children()[idx].get_node("Slot")
 
-	print(slot.get_children())
-	if len(slot.get_children()) == 1:
-		return slot.get_children()[0]
+    print(slot.get_children())
+    if len(slot.get_children()) == 1:
+        return slot.get_children()[0]
 
-	return null
-
+    return null
 
 
 func player_can_attack() -> bool:
-	for idx in range(2 * sectors):
-		if not slot_is_bottom(idx):
-			continue
+    for idx in range(2 * sectors):
+        if not slot_is_bottom(idx):
+            continue
 
-		if get_card_in_slot(idx) != null:
-			return true
+        var card = get_card_in_slot(idx)
 
-	return false
+        if card == null:
+            continue
+
+        if not card.get_node("SleepParticles").isSleeping:
+            return true
+
+    return false
 
 
 func attack(attacker_index: int):
-	# var attacker_index = card_list.find(attacking_card)
-	var opponent_index = (
-		(attacker_index + sectors)
-		% (2 * sectors))
+    # var attacker_index = card_list.find(attacking_card)
+    var opponent_index = (
+        (attacker_index + sectors)
+        % (2 * sectors))
 
-	var attacking_card = get_card_in_slot(attacker_index)
-	var opponent_card = get_card_in_slot(opponent_index)
+    var attacking_card = get_card_in_slot(attacker_index)
+    var opponent_card = get_card_in_slot(opponent_index)
 
-	if attacking_card == null:
-		push_error("There is no attacking card")
+    if attacking_card == null:
+        push_error("There is no attacking card")
 
-	if opponent_card == null:
-		# TODO: Attack opponent.
-		emit_signal("player_attacked", 1, attacking_card.attack_day)
-		return
+    if opponent_card == null:
+        # TODO: Attack opponent.
+        emit_signal("player_attacked", 1, attacking_card.attack_day)
+        return
 
-	# Handel hier de abillities af
+    # Handel hier de abillities af
 
-	# verediging - aanval
-	var attack_result = 0
+    # verediging - aanval
+    var attack_result = 0
 
-	if slot_is_bottom(attacker_index):
-		attack_result = (
-			card_data[opponent_card.id].defence_night_value
-			- card_data[attacking_card.id].attack_day_value
-		)
+    if slot_is_bottom(attacker_index):
+        attack_result = (
+            card_data[opponent_card.id].defence_night_value
+            - card_data[attacking_card.id].attack_day_value
+        )
 
-	else:
-		attack_result = (
-			card_data[opponent_card.id].defence_day_value
-			- card_data[attacking_card.id].attack_night_value
-		)
+    else:
+        attack_result = (
+            card_data[opponent_card.id].defence_day_value
+            - card_data[attacking_card.id].attack_night_value
+        )
 
-	print("Attack result ", attack_result)
+    print("Attack result ", attack_result)
 
 
 func _on_Root_next_action(turn, player):
-	player_attacking = false
+    player_attacking = false
 
-	match turn:
-		"rotate":
-			rotate_board(1)
+    match turn:
+        "rotate":
+            rotate_board(1)
 
-			yield(self, "rotation_complete")
+            yield(self, "rotation_complete")
 
-			emit_signal("action_ended", turn, {})
-		"place":
-			if player > 0:
-				emit_signal("action_ended", turn, {"skipped": true})
-		"attack":
-			if player == 0 and player_can_attack():
-				player_attacking = true
-			else:
-				emit_signal("action_ended", turn, {"skipped": true})
+            emit_signal("action_ended", turn, {})
+        "place":
+            if player > 0:
+                emit_signal("action_ended", turn, {"skipped": true})
+        "attack":
+            if player == 0 and player_can_attack():
+                player_attacking = true
+            else:
+                emit_signal("action_ended", turn, {"skipped": true})
 
 
 func _on_Root_next_turn(player):
@@ -168,17 +172,17 @@ func _on_Root_next_turn(player):
 
 
 func _on_CardSlot_slot_occupied(slot, card):
-	emit_signal("action_ended", "place", {"slot": slot, "card": card})
+    emit_signal("action_ended", "place", {"slot": slot, "card": card})
 
 
 func _on_CardSlot_slot_clicked(slot, card):
-	if not player_attacking:
-		return
+    if not player_attacking:
+        return
 
-	print("Attack!")
+    print("Attack!")
 
-	var idx = $Slots.get_children().find(slot)
+    var idx = $Slots.get_children().find(slot)
 
-	attack(idx)
+    attack(idx)
 
-	emit_signal("action_ended", "attack", {})
+    emit_signal("action_ended", "attack", {})
