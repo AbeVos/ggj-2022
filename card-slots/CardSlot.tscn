@@ -19,6 +19,7 @@ scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
 [node name="Slot" type="Node2D" parent="."]
+rotation = 3.14159
 
 [node name="Label" type="Label" parent="."]
 visible = false
