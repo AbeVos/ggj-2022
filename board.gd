@@ -4,6 +4,8 @@ signal action_ended(turn, result)
 signal new_angle(angle)
 signal rotation_complete
 
+signal player_attacked(player, damage)
+
 var slot_scene = preload("res://card-slots/CardSlot.tscn")
 
 export(int) var sectors = 4  # Number of card slots on each side.
@@ -111,6 +113,7 @@ func attack(attacker_index: int):
 
 	if opponent_card == null:
 		# TODO: Attack opponent.
+		emit_signal("player_attacked", 1, attacking_card.attack_day)
 		return
 
 	# Handel hier de abillities af

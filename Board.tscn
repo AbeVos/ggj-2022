@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://turn-manager/turn-manager.gd" type="Script" id=2]
 [ext_resource path="res://handcards/hand.gd" type="Script" id=3]
 [ext_resource path="res://handcards/discard-pile.gd" type="Script" id=4]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -12,7 +13,7 @@ _data = {
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
-turn_actions = [ "draw", "place", "discard", "attack", "rotate" ]
+turn_actions = [ "draw", "place", "discard", "attack", "check", "rotate" ]
 
 [node name="Control" type="Control" parent="."]
 anchor_left = 0.5
@@ -61,9 +62,15 @@ __meta__ = {
 }
 cards_path = NodePath("../PlayerHand/Cards")
 
+[node name="HUD" parent="." instance=ExtResource( 5 )]
+mouse_filter = 2
+
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
+[connection signal="next_action" from="." to="HUD" method="_on_Root_next_action"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
+[connection signal="player_attacked" from="Control/Board" to="HUD" method="_on_Board_player_attacked"]
 [connection signal="action_ended" from="PlayerHand" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="DiscardPile" to="." method="_on_action_ended"]
+[connection signal="action_ended" from="HUD" to="." method="_on_action_ended"]
