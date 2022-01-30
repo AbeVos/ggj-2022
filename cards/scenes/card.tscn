@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://cards/assets/default.png" type="Texture" id=1]
 [ext_resource path="res://cards/scripts/card.gd" type="Script" id=2]
 [ext_resource path="res://cards/assets/dagger.png" type="Texture" id=3]
 [ext_resource path="res://cards/assets/shield.png" type="Texture" id=4]
 [ext_resource path="res://cards/assets/Kaart_Template_01.png" type="Texture" id=5]
+[ext_resource path="res://cards - sleep/SleepParticles.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 110, 147.5 )
@@ -176,5 +177,8 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.260341, 0.260341 )
 texture = ExtResource( 5 )
+
+[node name="SleepParticles" parent="." instance=ExtResource( 6 )]
+position = Vector2( 107, -148 )
 
 [connection signal="input_event" from="." to="." method="_on_Card_input_event"]
