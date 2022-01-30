@@ -53,8 +53,10 @@ func rotate_board(turns: int):
         print("New angle ", angle)
 
     for idx in range(2 * sectors):
-        var is_bottom = slot_is_bottom(idx)
-        var slot = $Slots.get_children()[idx]
+        var _is_bottom = slot_is_bottom(idx)
+        var _slot = $Slots.get_children()[idx]
+
+        # TODO: Update bottom status.
 
 
     emit_signal("rotation_complete")
