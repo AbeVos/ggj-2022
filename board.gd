@@ -17,9 +17,6 @@ export(float, 0, 5) var rotation_duration = 2.0
 var tween
 var angle = 0
 var player_attacking = false
-var card_list = []
-var card_data
-var is_day = [true, true, true, true, false, false, false, false]
 
 
 func _ready():
@@ -44,8 +41,6 @@ func _ready():
             cos(deg2rad(angle_offset)),
             sin(deg2rad(angle_offset)))
         slot.rotation_degrees = angle_offset + 90
-
-    card_data = card_db.card_data
 
 
 func rotate_board(turns: int):
@@ -93,6 +88,19 @@ func get_card_in_slot(idx: int):
         return slot.get_children()[0]
 
     return null
+
+
+func player_can_place() -> bool:
+    for idx in range(2 * sectors):
+        if not slot_is_bottom(idx):
+            continue
+
+        var card = get_card_in_slot(idx)
+
+        if card == null:
+            return true
+
+    return false
 
 
 func player_can_attack() -> bool:
@@ -158,7 +166,6 @@ func perform_opponent_attack():
 
 
 func attack(attacker_index: int):
-    # var attacker_index = card_list.find(attacking_card)
     var opponent_index = (
         (attacker_index + sectors)
         % (2 * sectors))
@@ -215,14 +222,13 @@ func _on_Root_next_action(turn, player):
                 emit_signal("action_ended", turn, {"skipped": true})
 
 
-func _on_Root_next_turn(player):
+func _on_Root_next_turn(_player):
     for idx in range(2 * sectors):
         var card = get_card_in_slot(idx)
 
         if card == null:
             continue
 
-        print("Update sleep")
         card.get_node("SleepParticles").handleTurnsToSleep()
 
 
