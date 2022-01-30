@@ -34,7 +34,7 @@ func _input(event):
         var target_slot = find_closest_slot()
 
         if target_slot != null:
-            target_slot.occupy_slot($Sprite)
+            target_slot.occupy_slot($CardFace)
 
             # call_deferred("queue_free")
             call_deferred("free")
