@@ -1,4 +1,11 @@
 
+extends Control
+signal action_ended(turn, result)
+signal hand_discarded
+
+export(NodePath) var cards_path
+
+var tween
 
 func _ready():
 	tween = Tween.new()
