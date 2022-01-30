@@ -4,6 +4,7 @@ const NEXT_ACTION_PRINT = "Next action %s, %s"
 
 signal next_action(turn, player)
 signal next_turn(player)
+signal game_over(winner)
 
 export(int) var num_players = 2
 export(Array, String) var turn_actions: Array = [
@@ -34,6 +35,9 @@ func _on_action_ended(action: String, result: Dictionary = {}):
 
         if winner != null:
             print("PLAYER ", winner, " HAS WON!")
+
+            emit_signal("game_over", winner)
+            get_tree().change_scene("end-screen/EndScreen.tscn")
 
             return
 
