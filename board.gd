@@ -177,7 +177,7 @@ func _on_CardSlot_slot_occupied(slot, card):
     emit_signal("action_ended", "place", {"slot": slot, "card": card})
 
 
-func _on_CardSlot_slot_clicked(slot, card):
+func _on_CardSlot_slot_clicked(slot, _card):
     if not player_attacking:
         return
 
