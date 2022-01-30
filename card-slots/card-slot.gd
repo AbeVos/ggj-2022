@@ -6,6 +6,9 @@ signal slot_freed(this, card)
 signal slot_clicked(this, card)
 signal slot_attacked
 
+signal card_destroyed
+signal attack_deflected
+
 export var attack_distance = 200
 
 var sleep_scene = preload("res://cards-sleep/SleepParticles.tscn")
@@ -13,7 +16,7 @@ var sleep_scene = preload("res://cards-sleep/SleepParticles.tscn")
 var card_tween
 var attack_tween
 var is_occupied := false
-var is_bottom := true
+var is_bottom := true setget set_is_bottom
 
 
 func _ready():
@@ -58,6 +61,11 @@ func occupy_slot(card):
     emit_signal("slot_occupied", self, card)
 
 
+func set_is_bottom(value):
+    is_bottom = value
+    $DayIndicator.visible = is_bottom
+
+
 func free_slot():
     if not is_occupied:
         push_error(name + " is not occupied, cannot be freed!")
@@ -93,6 +101,43 @@ func attack():
     emit_signal("slot_attacked")
 
 
+func destroy_card():
+    if not is_occupied:
+        push_error("Slot is not occupied")
+
+    yield(get_tree().create_timer(0.3), "timeout")
+
+    var card = $Slot/CardFace
+    card_tween.interpolate_property(
+        card, "scale",
+        card.scale, Vector2.ZERO, 0.7,
+        Tween.TRANS_BACK, Tween.EASE_IN)
+    card_tween.start()
+
+    yield(card_tween, "tween_all_completed")
+    card.queue_free()
+    is_occupied = false
+    emit_signal("card_destroyed")
+
+
+func deflect_attack():
+    if not is_occupied:
+        push_error("Slot is not occupied")
+
+    yield(get_tree().create_timer(0.3), "timeout")
+
+    var card = $Slot/CardFace
+    var target_scale = card.scale
+    card_tween.interpolate_property(
+        card, "scale",
+        1.5 * target_scale, target_scale, 0.7,
+        Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+    card_tween.start()
+
+    yield(card_tween, "tween_all_completed")
+    emit_signal("attack_deflected")
+
+
 func _on_Area_input_event(_viewport, event, _shape_idx):
     if (
         event is InputEventMouseButton
@@ -100,6 +145,8 @@ func _on_Area_input_event(_viewport, event, _shape_idx):
         and event.button_index == 1
     ):
         if len($Slot.get_children()) == 1:
-            emit_signal("slot_clicked", self, $Slot.get_children()[0])
+            var card = $Slot.get_children()[0]
+            if not card.get_node("SleepParticles").isSleeping:
+                emit_signal("slot_clicked", self, $Slot.get_children()[0])
         elif len($Slot.get_children()) > 1:
             push_error("Slot has more than one child.")

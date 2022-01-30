@@ -52,7 +52,6 @@ func rotate_board(turns: int):
 
         angle = (angle + sign(turns)) % (2 * sectors)
         emit_signal("new_angle", angle)
-        print("New angle ", angle)
 
     for idx in range(2 * sectors):
         var is_bottom = slot_is_bottom(idx)
@@ -136,23 +135,23 @@ func opponent_can_attack() -> bool:
 
 
 func perform_opponent_attack():
-    var from = (angle + sectors) % (2 * sectors)
-    var to = (angle + 2 * sectors) % (2 * sectors)
-
     var indices = []
 
-    for idx in range(to, from):
-        # idx = from + idx
-        print(idx)
+    for idx in range(2 * sectors):
+        if slot_is_bottom(idx):
+            continue
 
         var card = get_card_in_slot(idx)
 
-        if card != null:
-            var is_sleeping = card.get_node("SleepParticles").isSleeping
-            if not is_sleeping:
-                indices.append(idx)
+        if card == null:
+            continue
+
+        var is_sleeping = card.get_node("SleepParticles").isSleeping
+        if not is_sleeping:
+            indices.append(idx)
 
     if len(indices) == 0:
+        push_error("Could not perform attack")
         emit_signal("action_ended", "attack", {"skipped": true})
     else:
         var select = indices[randi() % len(indices)]
@@ -177,25 +176,38 @@ func attack(attacker_index: int):
         push_error("There is no attacking card")
 
     if opponent_card == null:
+        var victim = 1
+        var damage = attacking_card.attack_day
+
+        if slot_is_bottom(opponent_index):
+            victim = 0
+            damage = attacking_card.attack_night
+
         # Attack opponent.
-        emit_signal("player_attacked", 1, attacking_card.attack_day)
+        emit_signal("player_attacked", victim, damage)
         return
 
     # Handel hier de abillities af
 
     # verediging - aanval
-    var attack_result = 0
+    var attack_result
 
     if slot_is_bottom(attacker_index):
         attack_result = (
-            opponent_card.defence_night - attacking_card.attack_day)
-
-        emit_signal("player_attacked", 1, attack_result)
-
+            attacking_card.attack_day - opponent_card.defence_night)
     else:
         attack_result = (
-            opponent_card.defence_day - attacking_card.attack_night)
-        emit_signal("player_attacked", 0, attack_result)
+            attacking_card.attack_night - opponent_card.defence_day)
+
+    var slot = $Slots.get_children()[opponent_index]
+
+    if attack_result > 0:
+        slot.destroy_card()
+
+        # yield(slot, "card_destroyed")
+        # emit_signal("action_ended", "attack", {})
+    else:
+        slot.deflect_attack()
 
 
 func _on_Root_next_action(turn, player):
@@ -242,10 +254,7 @@ func _on_CardSlot_slot_clicked(slot, _card):
 
     var idx = $Slots.get_children().find(slot)
 
-    print(slot_is_bottom(idx))
-
     if slot_is_bottom(idx):
-        print("Attack!")
         attack(idx)
         slot.attack()
 
