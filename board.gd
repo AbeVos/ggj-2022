@@ -33,6 +33,8 @@ func _ready():
         slot.connect("slot_occupied", self, "_on_CardSlot_slot_occupied")
         slot.connect("slot_clicked", self, "_on_CardSlot_slot_clicked")
 
+        slot.is_bottom = sector < sectors
+
         var angle_offset = (
             360.0 / (2 * sectors)  # Angle of a sector.
             * (sector + 0.5)  # Sector index offset + halfsector offset.
@@ -56,10 +58,10 @@ func rotate_board(turns: int):
         print("New angle ", angle)
 
     for idx in range(2 * sectors):
-        var _is_bottom = slot_is_bottom(idx)
-        var _slot = $Slots.get_children()[idx]
+        var is_bottom = slot_is_bottom(idx)
 
         # TODO: Update bottom status.
+        $Slots.get_children()[idx].is_bottom = is_bottom
 
 
     emit_signal("rotation_complete")
