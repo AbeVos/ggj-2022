@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ggj- 2022"
-run/main_scene="res://Board.tscn"
+run/main_scene="res://start-menu/StartMenu.tscn"
 config/icon="res://icon.png"
 
 [audio]
