@@ -2,6 +2,7 @@ extends Node2D
 
 signal action_ended(turn, result)
 signal new_angle(angle)
+signal rotation_started
 signal rotation_complete
 
 signal player_attacked(player, damage)
@@ -48,6 +49,7 @@ func _ready():
 
 
 func rotate_board(turns: int):
+    emit_signal("rotation_started")
     var clockwise = turns > 0
     for _idx in range(abs(turns)):
         single_rotation(clockwise)

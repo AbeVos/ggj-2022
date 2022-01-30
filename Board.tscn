@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://turn-manager/turn-manager.gd" type="Script" id=2]
@@ -6,9 +6,10 @@
 [ext_resource path="res://handcards/discard-pile.gd" type="Script" id=4]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://audio/BackgroundMusic.tscn" type="PackedScene" id=6]
-[ext_resource path="res://art/BG_disk.png" type="Texture" id=7]
+[ext_resource path="res://audio/BoardAudio.tscn" type="PackedScene" id=7]
 [ext_resource path="res://art/BG_Final.png" type="Texture" id=8]
 [ext_resource path="res://hud/HUD.gd" type="Script" id=9]
+[ext_resource path="res://art/BG_disk.png" type="Texture" id=10]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -41,7 +42,7 @@ script = ExtResource( 1 )
 [node name="Wheel" type="Sprite" parent="Control/Board"]
 scale = Vector2( 0.6, 0.6 )
 z_index = -10
-texture = ExtResource( 7 )
+texture = ExtResource( 10 )
 
 [node name="Slots" type="Node2D" parent="Control/Board"]
 
@@ -77,6 +78,8 @@ script = ExtResource( 9 )
 
 [node name="BackgroundMusic" parent="." instance=ExtResource( 6 )]
 
+[node name="BoardAudio" parent="BackgroundMusic" instance=ExtResource( 7 )]
+
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="DiscardPile" method="_on_Root_next_action"]
@@ -84,6 +87,8 @@ script = ExtResource( 9 )
 [connection signal="next_turn" from="." to="Control/Board" method="_on_Root_next_turn"]
 [connection signal="action_ended" from="Control/Board" to="." method="_on_action_ended"]
 [connection signal="player_attacked" from="Control/Board" to="HUD" method="_on_Board_player_attacked"]
+[connection signal="rotation_complete" from="Control/Board" to="BackgroundMusic/BoardAudio" method="_on_Board_rotation_complete"]
+[connection signal="rotation_started" from="Control/Board" to="BackgroundMusic/BoardAudio" method="_on_Board_rotation_started"]
 [connection signal="action_ended" from="PlayerHand" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="DiscardPile" to="." method="_on_action_ended"]
 [connection signal="action_ended" from="HUD" to="." method="_on_action_ended"]
