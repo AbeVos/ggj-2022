@@ -8,6 +8,7 @@
 [node name="CardSlot" type="Node2D"]
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 1 )
+attack_distance = 400
 
 [node name="Area" type="Area2D" parent="."]
 monitoring = false
@@ -31,6 +32,9 @@ __meta__ = {
 }
 
 [node name="CardAudio" parent="." instance=ExtResource( 4 )]
+
+[node name="DayIndicator" type="Sprite" parent="."]
+position = Vector2( 0, -196.25 )
 
 [connection signal="card_placed" from="." to="CardAudio" method="_on_CardSlot_card_placed"]
 [connection signal="input_event" from="Area" to="." method="_on_Area_input_event"]
