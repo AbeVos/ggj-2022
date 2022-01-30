@@ -1,19 +1,19 @@
 {
   "9a416930": {
-    "name": "Argia",
-    "attack_day_value": 3,
-    "defence_day_value": 8,
-    "attack_night_value": 0,
-    "defence_night_value": 2,
+    "name": "Werewolf",
+    "attack_day_value": 0,
+    "defence_day_value": 2,
+    "attack_night_value": 2,
+    "defence_night_value": 3,
     "image_path": "res://cards/assets/Kaart_Base.png"
   },
   "75a6d665": {
-    "name": "Illuna",
-    "attack_day_value": 0,
+    "name": "Knight",
+    "attack_day_value": 3,
     "defence_day_value": 2,
-    "attack_night_value": 6,
+    "attack_night_value": 0,
     "defence_night_value": 2,
-    "image_path": "res://cards/assets/Kaart_Base.png"
+    "image_path": "res://cards/assets/card_knight.png"
   },
   "691749b2": {
     "name": "Lily",
