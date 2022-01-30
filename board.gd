@@ -137,7 +137,7 @@ func opponent_can_attack() -> bool:
 func perform_opponent_attack():
     var indices = []
 
-    for idx in range(sectors):
+    for idx in range(2 * sectors):
         if slot_is_bottom(idx):
             continue
 

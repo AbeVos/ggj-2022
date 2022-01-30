@@ -145,6 +145,8 @@ func _on_Area_input_event(_viewport, event, _shape_idx):
         and event.button_index == 1
     ):
         if len($Slot.get_children()) == 1:
-            emit_signal("slot_clicked", self, $Slot.get_children()[0])
+            var card = $Slot.get_children()[0]
+            if not card.get_node("SleepParticles").isSleeping:
+                emit_signal("slot_clicked", self, $Slot.get_children()[0])
         elif len($Slot.get_children()) > 1:
             push_error("Slot has more than one child.")
