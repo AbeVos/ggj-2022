@@ -1,24 +1,36 @@
 extends Control
+
 signal action_ended(turn, result)
 signal cards_drawn
 signal card_added
+signal cards_reshuffled
 
 var card_scene = preload("res://handcards/HandCard.tscn")
+
+var card_db = preload("res://data/cards.tres")
+var deck_db = preload("res://data/deck.tres")
+
+var deck := []
 
 export(int) var cards_in_hand = 3
 export(NodePath) var discard_pile
 
 var card_tween
 
-
 func _ready():
     card_tween = Tween.new()
     add_child(card_tween)
 
+    for card_id in deck_db.deck_data:
+        deck.push_front(card_id)
+
+    randomize()
+    deck.shuffle()
+
 
 func draw_hand():
     # Draw random cards.
-    for idx in range(cards_in_hand):
+    for _idx in range(cards_in_hand):
         var card = draw_card()
 
         var follower = PathFollow2D.new()
@@ -103,10 +115,25 @@ func draw_card():
     var card = card_scene.instance()
     card.hand = self
 
-    # TODO: Assign a random resource.
+    #Assign a random resource.  
+    if len(deck) < 3:
+        reshuffle_deck()
+
+    var id = deck.pop_back()
+    card.get_child(1).id = id
 
     return card
 
+func reshuffle_deck():
+    var pile = get_parent().get_child(2)
+    print(pile)
+
+    if len(pile.discarded_card_ids) > 1:
+        for id in pile.discarded_card_ids:
+            deck.push_back(id)
+    
+        deck.shuffle()
+        emit_signal("cards_reshuffled")
 
 func _on_Root_next_action(turn, player):
     match turn:
