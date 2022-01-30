@@ -9,7 +9,7 @@ signal player_attacked(player, damage)
 var slot_scene = preload("res://card-slots/CardSlot.tscn")
 
 export(int) var sectors = 4  # Number of card slots on each side.
-export(float) var radius = 150.0
+export(float) var radius = 330.0
 export(float, 0, 5) var rotation_duration = 2.0
 
 var tween
