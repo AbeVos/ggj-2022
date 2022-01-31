@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     
     container:
-      image: barichello/godot-ci:3.3.4
+      image: barichello/godot-ci:3.4.2
   
     steps:
       - name: Checkout
