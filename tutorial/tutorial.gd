@@ -3,7 +3,15 @@ extends CenterContainer
 var progress = 0
 
 
+func _ready():
+    if TutorialManager.tutorial_finished:
+        queue_free()
+
+
 func _on_Root_next_action(turn, _player):
+    if TutorialManager.tutorial_finished:
+        return
+
     visible = true
 
     for dialog in get_children():
@@ -17,7 +25,8 @@ func _on_Root_next_action(turn, _player):
             get_tree().paused = false
 
     visible = false
-    print("Finished tutorial")
 
     if len(get_children()) == 0:
+        print("Finished tutorial")
+        TutorialManager.tutorial_finished = true
         queue_free()
