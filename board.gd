@@ -201,7 +201,7 @@ func attack(attacker_index: int):
 
     var slot = $Slots.get_children()[opponent_index]
 
-    if attack_result > 0:
+    if attack_result >= 0:
         slot.destroy_card()
 
         # yield(slot, "card_destroyed")
