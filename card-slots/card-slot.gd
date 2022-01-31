@@ -5,6 +5,7 @@ signal slot_occupied(this, card)
 signal slot_freed(this, card)
 signal slot_clicked(this, card)
 signal slot_attacked
+signal card_placed
 
 signal card_destroyed
 signal attack_deflected
@@ -55,6 +56,7 @@ func occupy_slot(card):
         Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 
     card_tween.start()
+    emit_signal("card_placed")
 
     yield(card_tween, "tween_all_completed")
 
