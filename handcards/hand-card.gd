@@ -43,6 +43,7 @@ func _input(event):
             call_deferred("free")
         else:
             # Otherwise, return it to the hand.
+            global_scale = target_scale
             var offset = hand.get_node("Cards").curve.get_closest_offset(
                 self.global_position)
             self.get_parent().remove_child(self)
