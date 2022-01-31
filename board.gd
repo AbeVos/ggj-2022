@@ -208,7 +208,7 @@ func attack(attacker_index: int):
 
     attacker_slot.attack(false)
 
-    if attack_result > 0:
+    if attack_result >= 0:
         opponent_slot.destroy_card()
 
         # yield(slot, "card_destroyed")
