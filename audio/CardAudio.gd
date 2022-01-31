@@ -8,7 +8,7 @@ func _ready():
     sounds.append(preload("res://audio/sounds/card_drop_03.wav"))
     sounds.append(preload("res://audio/sounds/card_drop_04.wav"))
     sounds.append(preload("res://audio/sounds/card_drop_05.wav"))
-    sounds.append(preload("res://audio/sounds/card_drop_06.wav"))
+    # sounds.append(preload("res://audio/sounds/card_drop_06.wav"))
 
     randomize()
 
