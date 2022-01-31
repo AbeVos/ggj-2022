@@ -23,9 +23,9 @@ __meta__ = {
 
 [node name="DrawDialog" type="AcceptDialog" parent="."]
 margin_left = 159.0
-margin_top = 540.0
+margin_top = 529.0
 margin_right = 1040.0
-margin_bottom = 659.0
+margin_bottom = 670.0
 theme = ExtResource( 3 )
 popup_exclusive = true
 window_title = "Tip!"
@@ -39,9 +39,9 @@ action = "draw"
 
 [node name="DiscardDialog" type="AcceptDialog" parent="."]
 margin_left = 317.0
-margin_top = 560.0
+margin_top = 549.0
 margin_right = 883.0
-margin_bottom = 640.0
+margin_bottom = 651.0
 theme = ExtResource( 3 )
 popup_exclusive = true
 window_title = "Tip!"
@@ -54,9 +54,9 @@ action = "discard"
 
 [node name="AttackDialog" type="AcceptDialog" parent="."]
 margin_left = 105.0
-margin_top = 404.0
+margin_top = 393.0
 margin_right = 1094.0
-margin_bottom = 796.0
+margin_bottom = 807.0
 theme = ExtResource( 3 )
 popup_exclusive = true
 window_title = "Tip!"

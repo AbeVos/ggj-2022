@@ -37,6 +37,7 @@ default_bus_layout=""
 [autoload]
 
 Clicker="*res://clicker/clicker.gd"
+TutorialManager="*res://tutorial/tutorial-manager.gd"
 
 [display]
 
