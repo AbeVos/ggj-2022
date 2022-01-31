@@ -158,7 +158,6 @@ func perform_opponent_attack():
         var slot = $Slots.get_children()[select]
 
         attack(select)
-        # slot.attack()
         yield(slot, "slot_attacked")
 
         emit_signal("action_ended", "attack", {})
@@ -189,7 +188,6 @@ func attack(attacker_index: int):
         # Attack opponent.
         attacker_slot.attack(true)
 
-        # TODO: Show damage above opponent's slot.
         opponent_slot.damage_player(damage)
         emit_signal("player_attacked", victim, damage)
         return
