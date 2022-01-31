@@ -158,7 +158,7 @@ func perform_opponent_attack():
         var slot = $Slots.get_children()[select]
 
         attack(select)
-        slot.attack()
+        # slot.attack()
         yield(slot, "slot_attacked")
 
         emit_signal("action_ended", "attack", {})
@@ -172,6 +172,9 @@ func attack(attacker_index: int):
     var attacking_card = get_card_in_slot(attacker_index)
     var opponent_card = get_card_in_slot(opponent_index)
 
+    var attacker_slot = $Slots.get_children()[attacker_index]
+    var opponent_slot = $Slots.get_children()[opponent_index]
+
     if attacking_card == null:
         push_error("There is no attacking card")
 
@@ -184,6 +187,10 @@ func attack(attacker_index: int):
             damage = attacking_card.attack_night
 
         # Attack opponent.
+        attacker_slot.attack(true)
+
+        # TODO: Show damage above opponent's slot.
+        opponent_slot.damage_player(damage)
         emit_signal("player_attacked", victim, damage)
         return
 
@@ -199,15 +206,15 @@ func attack(attacker_index: int):
         attack_result = (
             attacking_card.attack_night - opponent_card.defence_day)
 
-    var slot = $Slots.get_children()[opponent_index]
+    attacker_slot.attack(false)
 
     if attack_result > 0:
-        slot.destroy_card()
+        opponent_slot.destroy_card()
 
         # yield(slot, "card_destroyed")
         # emit_signal("action_ended", "attack", {})
     else:
-        slot.deflect_attack()
+        opponent_slot.deflect_attack()
 
 
 func _on_Root_next_action(turn, player):
@@ -256,7 +263,7 @@ func _on_CardSlot_slot_clicked(slot, _card):
 
     if slot_is_bottom(idx):
         attack(idx)
-        slot.attack()
+        # slot.attack()
 
         yield(slot, "slot_attacked")
 

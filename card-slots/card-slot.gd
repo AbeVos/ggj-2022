@@ -12,6 +12,7 @@ signal attack_deflected
 export var attack_distance = 200
 
 var sleep_scene = preload("res://cards-sleep/SleepParticles.tscn")
+var indicator_scene = preload("res://card-slots/DamageIndicator.tscn")
 
 var card_tween
 var attack_tween
@@ -79,8 +80,12 @@ func free_slot():
     return card
 
 
-func attack():
-    var target = -attack_distance * Vector2.UP
+func attack(long: bool = false):
+    var distance = attack_distance
+    if long:
+        distance *= 2.0
+
+    var target = -distance * Vector2.UP
     attack_tween.interpolate_property(
         $Slot, "position",
         Vector2.ZERO, target, 0.3,
@@ -136,6 +141,13 @@ func deflect_attack():
 
     yield(card_tween, "tween_all_completed")
     emit_signal("attack_deflected")
+
+
+func damage_player(damage):
+    # Display a damage indicator.
+    var indicator = indicator_scene.instance()
+    indicator.damage = damage
+    add_child(indicator)
 
 
 func _on_Area_input_event(_viewport, event, _shape_idx):
