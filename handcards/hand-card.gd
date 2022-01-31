@@ -7,16 +7,19 @@ var hand
 var active = false
 var clicked = false
 var dragging = false
+var target_scale
 var target = Vector2.ZERO
 
 
 func _ready():
     $Area.visible = false
+    target_scale = global_scale
 
 
 func _process(delta):
     if dragging:
         global_position = lerp(global_position, target, 10.0 * delta)
+        global_scale = lerp(global_scale, 1.5 * target_scale, 10.0 * delta)
 
 
 func _input(event):
@@ -40,6 +43,7 @@ func _input(event):
             call_deferred("free")
         else:
             # Otherwise, return it to the hand.
+            global_scale = target_scale
             var offset = hand.get_node("Cards").curve.get_closest_offset(
                 self.global_position)
             self.get_parent().remove_child(self)
@@ -58,7 +62,7 @@ func _on_Area_area_exited(area: Area2D):
         pass
 
 
-func _on_Area_input_event(_viewport, _event, _shape_idx):
+func _on_Area_input_event(_viewport, event, shape_idx):
     # Only called when the mouse is in the area.
     if not clicked:
         return
@@ -66,6 +70,7 @@ func _on_Area_input_event(_viewport, _event, _shape_idx):
     if not dragging:
         dragging = true
 
+        target = event.position
         hand.release_card(self)
         # TODO: Release card from hand.
 
