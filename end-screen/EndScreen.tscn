@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://font/card_font_theme.tres" type="Theme" id=1]
 [ext_resource path="res://font/NotoSerif-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://start-menu/assets/nightsky3.png" type="Texture" id=3]
 [ext_resource path="res://end-screen/EndScreen.gd" type="Script" id=4]
@@ -41,6 +42,21 @@ action_mode = 0
 enabled_focus_mode = 0
 text = "Restart"
 flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_top = 415.0
+margin_right = 203.0
+margin_bottom = 497.0
+theme = ExtResource( 1 )
+text = "The game is finished.."
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
