@@ -1,13 +1,7 @@
-# This is a basic workflow to help you get started with Actions
+name: Publish
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  #push:
-    #branches: [ master ]
-  pull_request:
+  push:
     branches: [ master ]
 
 env:
@@ -16,7 +10,6 @@ env:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   export-web:
     name: Web Export
@@ -35,6 +28,7 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      
       - name: Web Build
         run: |
           mkdir -v -p build/web
@@ -46,13 +40,15 @@ jobs:
         with:
           name: web
           path: build/web
-      # # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
-      # - name: Install rsync 📚
-      #   run: |
-      #     apt-get update && apt-get install -y rsync
-      # - name: Deploy to GitHub Pages 🚀
-      #   uses: JamesIves/github-pages-deploy-action@releases/v3
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     BRANCH: gh-pages # The branch the action should deploy to.
-      #     FOLDER: build/web # The folder the action should deploy.
+      
+      - name: Butler Push
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.2
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIAL }}
+          CHANNEL: web
+          ITCH_GAME: etmaal
+          ITCH_USER: mathijs750
+          PACKAGE: build/web
+          VERSION: ${{ GITHUB_RUN_ID }}
+
+
