@@ -49,6 +49,6 @@ jobs:
           ITCH_GAME: etmaal
           ITCH_USER: mathijs750
           PACKAGE: build/web
-          VERSION: ${{ GITHUB_RUN_ID }}
+          VERSION: ${{ github.run_id }}
 
 
