@@ -7,7 +7,7 @@
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://audio/BackgroundMusic.tscn" type="PackedScene" id=6]
 [ext_resource path="res://audio/BoardAudio.tscn" type="PackedScene" id=7]
-[ext_resource path="res://art/BG_Final.png" type="Texture" id=8]
+[ext_resource path="res://art/SorryRobin.png" type="Texture" id=8]
 [ext_resource path="res://hud/HUD.gd" type="Script" id=9]
 [ext_resource path="res://art/BG_disk.png" type="Texture" id=10]
 [ext_resource path="res://tutorial/Tutorial.tscn" type="PackedScene" id=11]
@@ -33,15 +33,17 @@ __meta__ = {
 }
 
 [node name="Background" type="Sprite" parent="Control"]
-scale = Vector2( 0.6, 0.6 )
-z_index = -5
+position = Vector2( 6, 4 )
+scale = Vector2( 0.376709, 0.376709 )
 texture = ExtResource( 8 )
 
 [node name="Board" type="Node2D" parent="Control"]
 script = ExtResource( 1 )
+radius = 195.0
 
 [node name="Wheel" type="Sprite" parent="Control/Board"]
-scale = Vector2( 0.6, 0.6 )
+position = Vector2( -0.500011, 4.64747 )
+scale = Vector2( 0.380371, 0.372415 )
 z_index = -10
 texture = ExtResource( 10 )
 
@@ -85,6 +87,10 @@ pause_mode = 2
 pause_mode = 1
 
 [node name="Tutorial" parent="." instance=ExtResource( 11 )]
+margin_left = -671.0
+margin_top = -372.0
+margin_right = 671.0
+margin_bottom = 377.0
 
 [connection signal="next_action" from="." to="Control/Board" method="_on_Root_next_action"]
 [connection signal="next_action" from="." to="PlayerHand" method="_on_Root_next_action"]

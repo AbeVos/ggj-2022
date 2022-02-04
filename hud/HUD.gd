@@ -7,27 +7,26 @@ export(int) var opponent_health = 5 setget set_opponent_health
 
 
 func _ready():
-    $PlayerHp.text = str(player_health)
-    $OpponentHp.text = str(opponent_health)
+    $PlayerHealthBar.value = player_health
+    $OpponentHealthBar.value = opponent_health
 
 
 func damage_player(amount: int):
     player_health -= amount
-    $PlayerHp.text = str(player_health)
-
+    $PlayerHealthBar.value = player_health
 
 func damage_opponent(amount: int):
     opponent_health -= amount
-    $OpponentHp.text = str(opponent_health)
+    $OpponentHealthBar.value = opponent_health
 
 
 func set_player_health(value):
     player_health = value
-    $PlayerHp.text = str(player_health)
+    $PlayerHealthBar.value = player_health
 
 func set_opponent_health(value):
     opponent_health = value
-    $OpponentHp.text = str(opponent_health)
+    $OpponentHealthBar.value = opponent_health
 
 
 func _on_Root_next_action(turn, player):

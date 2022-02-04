@@ -18,4 +18,4 @@ func random_sound():
     play()
 
 func _on_CardSlot_card_placed():
-	random_sound()
+    random_sound()

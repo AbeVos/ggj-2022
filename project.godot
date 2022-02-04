@@ -41,8 +41,8 @@ TutorialManager="*res://tutorial/tutorial-manager.gd"
 
 [display]
 
-window/size/width=1200
-window/size/height=1200
+window/size/width=1334
+window/size/height=750
 window/dpi/allow_hidpi=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
@@ -50,6 +50,10 @@ window/stretch/aspect="keep"
 [editor_plugins]
 
 enabled=PoolStringArray(  )
+
+[global]
+
+resolution=false
 
 [physics]
 

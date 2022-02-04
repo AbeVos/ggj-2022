@@ -6,7 +6,7 @@
 [ext_resource path="res://audio/CardAudio.tscn" type="PackedScene" id=4]
 
 [node name="CardSlot" type="Node2D"]
-scale = Vector2( 0.8, 0.8 )
+scale = Vector2( 0.6, 0.6 )
 script = ExtResource( 1 )
 attack_distance = 400
 
